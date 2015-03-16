@@ -34,8 +34,16 @@ public class SearchProxy
 			String str )
 	{
 		List<ApplicationInfo> appInfo = new ArrayList<ApplicationInfo>();
-		PackageManager packageManager = mContext.getPackageManager();
-		appInfo = packageManager.getInstalledApplications( PackageManager.GET_META_DATA );
-		return appInfo.subList( 0 , str.length() );
+		PackageManager pm = mContext.getPackageManager();
+		List<ApplicationInfo> allAppInfo = pm.getInstalledApplications( PackageManager.GET_META_DATA );
+		for( ApplicationInfo info : allAppInfo )
+		{
+			String name = String.valueOf( info.loadLabel( pm ) );
+			if( str.toLowerCase().equals( name.toLowerCase() ) )
+			{
+				appInfo.add( info );
+			}
+		}
+		return appInfo;
 	}
 }
