@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Search</string>
-    <string name="content">Please type some key words</string>
+    <string name="content">Please enter Keyword</string>
 </resources>
