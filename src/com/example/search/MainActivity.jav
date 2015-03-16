@@ -11,7 +11,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.Toast;
 
 
 public class MainActivity extends Activity
@@ -45,7 +44,6 @@ public class MainActivity extends Activity
 				int arg2 ,
 				int arg3 )
 		{
-			Toast.makeText( mContext , String.valueOf( s ) , Toast.LENGTH_SHORT ).show();
 			SearchProxy proxy = SearchProxy.getInstance( mContext );
 			List<ApplicationInfo> list = proxy.search( String.valueOf( s ) );
 			mGridView.setAdapter( new ImageAdapter( mContext , list ) );
