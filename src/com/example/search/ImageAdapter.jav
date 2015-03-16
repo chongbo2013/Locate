@@ -81,7 +81,7 @@ public class ImageAdapter extends BaseAdapter
 			public void onClick(
 					View v )
 			{
-				Toast.makeText( mContext , "" + position , Toast.LENGTH_SHORT ).show();
+				Toast.makeText( mContext , "" + mAppsList.get( position ).loadLabel( mPackageManager ) , Toast.LENGTH_SHORT ).show();
 			}
 		} );
 		return imageView;
