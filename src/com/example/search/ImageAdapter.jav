@@ -1,7 +1,11 @@
 package com.example.search;
 
 
+import java.util.List;
+
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -15,27 +19,27 @@ public class ImageAdapter extends BaseAdapter
 {
 	
 	private Context mContext;
-	// references to our images
-	private Integer[] mThumbIds = {
-			R.drawable.sample_0 ,
-			R.drawable.sample_1 ,
-			R.drawable.sample_2 ,
-			R.drawable.sample_3 ,
-			R.drawable.sample_4 ,
-			R.drawable.sample_5 ,
-			R.drawable.sample_6 ,
-			R.drawable.sample_7 };
+	private PackageManager mPackageManager;
+	private List<ApplicationInfo> mAppsList;
 	
 	public ImageAdapter(
-			Context c )
+			Context c ,
+			List<ApplicationInfo> appsList )
 	{
 		mContext = c;
+		mAppsList = appsList;
+		mPackageManager = mContext.getPackageManager();
 	}
 	
 	@Override
 	public int getCount()
 	{
-		return mThumbIds.length;
+		int size = 0;
+		if( mAppsList != null )
+		{
+			size = mAppsList.size();
+		}
+		return size;
 	}
 	
 	@Override
@@ -70,7 +74,7 @@ public class ImageAdapter extends BaseAdapter
 		{
 			imageView = (ImageView)convertView;
 		}
-		imageView.setImageResource( mThumbIds[position] );
+		imageView.setImageDrawable( mAppsList.get( position ).loadIcon( mPackageManager ) );
 		imageView.setOnClickListener( new OnClickListener() {
 			
 			@Override
