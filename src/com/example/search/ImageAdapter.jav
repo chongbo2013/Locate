@@ -4,6 +4,7 @@ package com.example.search;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.view.View;
@@ -82,6 +83,8 @@ public class ImageAdapter extends BaseAdapter
 					View v )
 			{
 				Toast.makeText( mContext , "" + mAppsList.get( position ).loadLabel( mPackageManager ) , Toast.LENGTH_SHORT ).show();
+				Intent LaunchIntent = mPackageManager.getLaunchIntentForPackage( mAppsList.get( position ).packageName );
+				mContext.startActivity( LaunchIntent );
 			}
 		} );
 		return imageView;
