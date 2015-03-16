@@ -39,7 +39,7 @@ public class SearchProxy
 		for( ApplicationInfo info : allAppInfo )
 		{
 			String name = String.valueOf( info.loadLabel( pm ) );
-			if( str.toLowerCase().equals( name.toLowerCase() ) )
+			if( name.toLowerCase().contains( str.toLowerCase() ) )
 			{
 				appInfo.add( info );
 			}
