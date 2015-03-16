@@ -6,7 +6,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -47,9 +46,9 @@ public class MainActivity extends Activity
 				int arg3 )
 		{
 			Toast.makeText( mContext , String.valueOf( s ) , Toast.LENGTH_SHORT ).show();
-			PackageManager packageManager = getPackageManager();
-			List<ApplicationInfo> list = packageManager.getInstalledApplications( PackageManager.GET_META_DATA );
-			mGridView.setAdapter( new ImageAdapter( mContext , list.subList( 0 , s.length() ) ) );
+			SearchProxy proxy = SearchProxy.getInstance( mContext );
+			List<ApplicationInfo> list = proxy.search( String.valueOf( s ) );
+			mGridView.setAdapter( new ImageAdapter( mContext , list ) );
 		}
 	};
 	
