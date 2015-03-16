@@ -19,6 +19,7 @@ public class MainActivity extends Activity
 {
 	
 	private Context mContext;
+	private GridView mGridView;
 	private TextWatcher mTextWatcher = new TextWatcher() {
 		
 		@Override
@@ -46,6 +47,9 @@ public class MainActivity extends Activity
 				int arg3 )
 		{
 			Toast.makeText( mContext , String.valueOf( s ) , Toast.LENGTH_SHORT ).show();
+			PackageManager packageManager = getPackageManager();
+			List<ApplicationInfo> list = packageManager.getInstalledApplications( PackageManager.GET_META_DATA );
+			mGridView.setAdapter( new ImageAdapter( mContext , list.subList( 0 , s.length() ) ) );
 		}
 	};
 	
@@ -56,10 +60,7 @@ public class MainActivity extends Activity
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.activity_main );
 		mContext = this;
-		GridView gridView = (GridView)findViewById( R.id.gridView );
-		PackageManager packageManager = getPackageManager();
-		List<ApplicationInfo> list = packageManager.getInstalledApplications( PackageManager.GET_META_DATA );
-		gridView.setAdapter( new ImageAdapter( this , list ) );
+		mGridView = (GridView)findViewById( R.id.gridView );
 		EditText editText = (EditText)findViewById( R.id.editText );
 		editText.addTextChangedListener( mTextWatcher );
 	}
