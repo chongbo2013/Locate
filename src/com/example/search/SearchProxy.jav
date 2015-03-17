@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 
 
 public class SearchProxy
@@ -30,13 +31,15 @@ public class SearchProxy
 		return mSearchProxy;
 	}
 	
-	public List<ApplicationInfo> search(
+	public List<ResolveInfo> search(
 			String str )
 	{
-		List<ApplicationInfo> appInfo = new ArrayList<ApplicationInfo>();
+		List<ResolveInfo> appInfo = new ArrayList<ResolveInfo>();
 		PackageManager pm = mContext.getPackageManager();
-		List<ApplicationInfo> allAppInfo = pm.getInstalledApplications( PackageManager.GET_META_DATA );
-		for( ApplicationInfo info : allAppInfo )
+		Intent i = new Intent( Intent.ACTION_MAIN );
+		i.addCategory( Intent.CATEGORY_LAUNCHER );
+		List<ResolveInfo> allAppInfo = pm.queryIntentActivities( i , 0 );
+		for( ResolveInfo info : allAppInfo )
 		{
 			String name = String.valueOf( info.loadLabel( pm ) );
 			if( name.toLowerCase().contains( str.toLowerCase() ) )

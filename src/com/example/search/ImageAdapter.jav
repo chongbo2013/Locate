@@ -5,8 +5,8 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -21,11 +21,11 @@ public class ImageAdapter extends BaseAdapter
 	
 	private Context mContext;
 	private PackageManager mPackageManager;
-	private List<ApplicationInfo> mAppsList;
+	private List<ResolveInfo> mAppsList;
 	
 	public ImageAdapter(
 			Context c ,
-			List<ApplicationInfo> appsList )
+			List<ResolveInfo> appsList )
 	{
 		mContext = c;
 		mAppsList = appsList;
@@ -39,6 +39,7 @@ public class ImageAdapter extends BaseAdapter
 		if( mAppsList != null )
 		{
 			size = mAppsList.size();
+			Toast.makeText( mContext , "" + size , Toast.LENGTH_SHORT ).show();
 		}
 		return size;
 	}
@@ -83,7 +84,7 @@ public class ImageAdapter extends BaseAdapter
 					View v )
 			{
 				Toast.makeText( mContext , "" + mAppsList.get( position ).loadLabel( mPackageManager ) , Toast.LENGTH_SHORT ).show();
-				Intent LaunchIntent = mPackageManager.getLaunchIntentForPackage( mAppsList.get( position ).packageName );
+				Intent LaunchIntent = mPackageManager.getLaunchIntentForPackage( mAppsList.get( position ).activityInfo.applicationInfo.packageName );
 				mContext.startActivity( LaunchIntent );
 			}
 		} );
