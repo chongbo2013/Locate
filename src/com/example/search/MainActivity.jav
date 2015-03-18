@@ -20,6 +20,7 @@ public class MainActivity extends Activity
 	
 	private Context mContext;
 	private GridView mGridView;
+	private EditText mEditText;
 	private TextWatcher mTextWatcher = new TextWatcher() {
 		
 		@Override
@@ -65,7 +66,18 @@ public class MainActivity extends Activity
 		setContentView( R.layout.activity_main );
 		mContext = this;
 		mGridView = (GridView)findViewById( R.id.gridView );
-		EditText editText = (EditText)findViewById( R.id.editText );
-		editText.addTextChangedListener( mTextWatcher );
+		mEditText = (EditText)findViewById( R.id.editText );
+		mEditText.addTextChangedListener( mTextWatcher );
+	}
+	
+	/**
+	 * When user click the cancel icon, we should clear the search content
+	 * 
+	 * @param view
+	 */
+	public void clearSearchContent(
+			View view )
+	{
+		mEditText.setText( "" );
 	}
 }
