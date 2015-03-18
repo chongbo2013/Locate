@@ -42,7 +42,8 @@ public class SearchProxy
 		for( ResolveInfo info : allAppInfo )
 		{
 			String name = String.valueOf( info.loadLabel( pm ) );
-			if( name.toLowerCase().contains( str.toLowerCase() ) )
+			String pinyin = PinyinUtils.spellWithoutSpace( name );
+			if( pinyin.toLowerCase().contains( str.toLowerCase() ) )
 			{
 				appInfo.add( info );
 			}

@@ -39,7 +39,6 @@ public class ImageAdapter extends BaseAdapter
 		if( mAppsList != null )
 		{
 			size = mAppsList.size();
-			Toast.makeText( mContext , "" + size , Toast.LENGTH_SHORT ).show();
 		}
 		return size;
 	}
