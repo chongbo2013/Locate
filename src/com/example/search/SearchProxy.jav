@@ -41,9 +41,12 @@ public class SearchProxy
 		List<ResolveInfo> allAppInfo = pm.queryIntentActivities( i , 0 );
 		for( ResolveInfo info : allAppInfo )
 		{
-			String name = String.valueOf( info.loadLabel( pm ) );
-			String pinyin = PinyinUtils.spellWithoutSpace( name );
-			if( pinyin.toLowerCase().contains( str.toLowerCase() ) )
+			// Original name
+			String original = String.valueOf( info.loadLabel( pm ) );
+			// After convert the origin name to pinyin
+			String pinyin = PinyinUtils.spellWithoutSpace( original );
+			String name = original + pinyin;
+			if( name.toLowerCase().contains( str.toLowerCase() ) )
 			{
 				appInfo.add( info );
 			}
