@@ -9,8 +9,10 @@ import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
 
 public class MainActivity extends Activity
@@ -44,6 +46,11 @@ public class MainActivity extends Activity
 				int arg2 ,
 				int arg3 )
 		{
+			// Set the visibility of cancel icon according to whether empty
+			ImageButton cancel = (ImageButton)findViewById( R.id.imageButton2 );
+			int visibility = s.toString().equals( "" ) ? View.GONE : View.VISIBLE;
+			cancel.setVisibility( visibility );
+			// Do the searching
 			SearchProxy proxy = SearchProxy.getInstance( mContext );
 			List<ResolveInfo> list = proxy.search( String.valueOf( s ) );
 			mGridView.setAdapter( new ImageAdapter( mContext , list ) );
