@@ -44,8 +44,8 @@ public class SearchProxy
 			// Original name
 			String original = String.valueOf( info.loadLabel( pm ) );
 			// After convert the origin name to pinyin
-			String pinyin = PinyinUtils.spellWithoutSpace( original );
-			String name = original + pinyin;
+			String pinyin = Utils.chinese2pinyin( original );
+			String name = original + pinyin + Utils.deleteSpace( pinyin ) + Utils.getFirstLetter( pinyin );
 			if( name.toLowerCase().contains( str.toLowerCase() ) )
 			{
 				appInfo.add( info );

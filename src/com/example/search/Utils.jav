@@ -9,7 +9,7 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 
-public class PinyinUtils
+public class Utils
 {
 	
 	/** 汉语拼音格式化工具类 */
@@ -20,7 +20,7 @@ public class PinyinUtils
 	* @param src 
 	* @return 
 	*/
-	public static String spell(
+	public static String chinese2pinyin(
 			String src )
 	{
 		format.setCaseType( HanyuPinyinCaseType.LOWERCASE ); // 小写拼音字母  
@@ -151,7 +151,7 @@ public class PinyinUtils
 	public static String getTerm(
 			String src )
 	{
-		String res = spell( src );
+		String res = chinese2pinyin( src );
 		if( res != null && res.length() > 0 )
 		{
 			return res.toUpperCase().charAt( 0 ) + "";
@@ -163,39 +163,36 @@ public class PinyinUtils
 	}
 	
 	/**
-	 * 获取字符串内的所有汉字的汉语拼音，不以空格分割
+	 * Delete all the space in the string
 	 * 
-	 * @param src
+	 * @param str
 	 * @return
 	 */
-	public static String spellWithoutSpace(
-			String src )
+	public static String deleteSpace(
+			String str )
 	{
-		format.setCaseType( HanyuPinyinCaseType.LOWERCASE ); // 小写拼音字母  
-		format.setToneType( HanyuPinyinToneType.WITHOUT_TONE ); // 不加语调标识  
-		format.setVCharType( HanyuPinyinVCharType.WITH_V ); // u:的声母替换为v  
-		StringBuffer sb = new StringBuffer();
-		int strLength = src.length();
-		try
+		String result = "";
+		for( String s : str.split( " " ) )
 		{
-			for( int i = 0 ; i < strLength ; i++ )
-			{
-				// 对英文字母的处理：小写字母转换为大写，大写的直接返回  
-				char ch = src.charAt( i );
-				if( ch >= 'a' && ch <= 'z' )
-					sb.append( (char)( ch - 'a' + 'A' ) );
-				if( ch >= 'A' && ch <= 'Z' )
-					sb.append( ch );
-				// 对汉语的处理  
-				String[] arr = PinyinHelper.toHanyuPinyinStringArray( ch , format );
-				if( arr != null && arr.length > 0 )
-					sb.append( arr[0] ).append( "" );
-			}
+			result += s;
 		}
-		catch( BadHanyuPinyinOutputFormatCombination e )
+		return result;
+	}
+	
+	/**
+	 * Divided by space, get the first letter
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static String getFirstLetter(
+			String str )
+	{
+		String result = "";
+		for( String s : str.split( " " ) )
 		{
-			e.printStackTrace();
+			result += s.charAt( 0 );
 		}
-		return sb.toString();
+		return result;
 	}
 }
