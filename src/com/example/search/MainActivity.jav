@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.text.Editable;
@@ -64,6 +65,8 @@ public class MainActivity extends Activity
 	{
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.activity_main );
+		Intent startIntent = new Intent( this , SearchService.class );
+		startService( startIntent );
 		mContext = this;
 		mGridView = (GridView)findViewById( R.id.gridView );
 		mEditText = (EditText)findViewById( R.id.editText );
