@@ -5,7 +5,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.widget.Toast;
 
 import com.example.search.HomeListen.OnHomeBtnPressLitener;
 
@@ -54,27 +53,17 @@ public class SearchService extends Service
 			@Override
 			public void onHomeBtnPress()
 			{
-				showToast( "按下Home按键！" );
-				Intent intent = new Intent( mContext , MainActivity.class );
-				intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
-				startActivity( intent );
+				// TODO
 			}
 			
 			@Override
 			public void onHomeBtnLongPress()
 			{
-				showToast( "长按Home按键！" );
 				Intent intent = new Intent( mContext , MainActivity.class );
 				intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
 				startActivity( intent );
 			}
 		} );
-	}
-	
-	private void showToast(
-			String toastInfoStr )
-	{
-		Toast.makeText( this , toastInfoStr , Toast.LENGTH_LONG ).show();
 	}
 	
 	private HomeListen mHomeListen = null;

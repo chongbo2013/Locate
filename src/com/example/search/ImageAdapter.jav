@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 
 public class ImageAdapter extends BaseAdapter
@@ -84,7 +83,7 @@ public class ImageAdapter extends BaseAdapter
 			public void onClick(
 					View v )
 			{
-				Toast.makeText( mContext , "" + mAppsList.get( position ).loadLabel( mPackageManager ) , Toast.LENGTH_SHORT ).show();
+				// start the application when being clicked
 				Intent LaunchIntent = mPackageManager.getLaunchIntentForPackage( mAppsList.get( position ).activityInfo.applicationInfo.packageName );
 				mContext.startActivity( LaunchIntent );
 			}
