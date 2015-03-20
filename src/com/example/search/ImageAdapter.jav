@@ -7,8 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
@@ -85,6 +87,19 @@ public class ImageAdapter extends BaseAdapter
 				Toast.makeText( mContext , "" + mAppsList.get( position ).loadLabel( mPackageManager ) , Toast.LENGTH_SHORT ).show();
 				Intent LaunchIntent = mPackageManager.getLaunchIntentForPackage( mAppsList.get( position ).activityInfo.applicationInfo.packageName );
 				mContext.startActivity( LaunchIntent );
+			}
+		} );
+		imageView.setOnLongClickListener( new OnLongClickListener() {
+			
+			@Override
+			public boolean onLongClick(
+					View v )
+			{
+				// delete the application when being long clicked
+				Intent intent = new Intent( Intent.ACTION_DELETE );
+				intent.setData( Uri.fromParts( "package" , mAppsList.get( position ).activityInfo.packageName , null ) );
+				mContext.startActivity( intent );
+				return true;
 			}
 		} );
 		return imageView;
