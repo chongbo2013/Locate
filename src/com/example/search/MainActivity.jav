@@ -73,13 +73,22 @@ public class MainActivity extends Activity
         mEditText.addTextChangedListener( mTextWatcher );
     }
 
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        // Clear the search content when the activity is paused
-        mEditText.setText("");
-    }
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		// hide the keyboard when the activity is paused, other the keyboard will appear when opening other app
+		InputMethodManager inputMethodManager = (InputMethodManager)getSystemService( Activity.INPUT_METHOD_SERVICE );
+		inputMethodManager.hideSoftInputFromWindow( getCurrentFocus().getWindowToken() , 0 );
+	}
+	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		// Clear the search content when the activity is paused
+		mEditText.setText( "" );
+	}
 
     /**
      * When user click the cancel icon, we should clear the search content
