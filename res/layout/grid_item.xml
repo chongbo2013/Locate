@@ -2,6 +2,7 @@
     android:id="@+id/GridItem"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@color/grid_item_state"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="8dp" >
