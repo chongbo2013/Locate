@@ -64,20 +64,20 @@ public class ImageAdapter extends BaseAdapter
 			View convertView ,
 			ViewGroup parent )
 	{
-		ImageView imageView;
+				View myView = convertView;
 		if( convertView == null )
-		{ // if it's not recycled, initialize some attributes
-			imageView = new ImageView( mContext );
-			imageView.setLayoutParams( new GridView.LayoutParams( 164 , 164 ) );
-			imageView.setScaleType( ImageView.ScaleType.CENTER_CROP );
-			imageView.setPadding( 8 , 8 , 8 , 8 );
-		}
-		else
 		{
-			imageView = (ImageView)convertView;
+			//Inflate the layout
+			LayoutInflater inflater = (LayoutInflater)mContext.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+			myView = inflater.inflate( R.layout.grid_item , null );
+			// Add The Image!!!           
+			ImageView iv = (ImageView)myView.findViewById( R.id.grid_item_image );
+			iv.setImageDrawable( mAppsList.get( position ).loadIcon( mPackageManager ) );
+			// Add The Text!!!
+			TextView tv = (TextView)myView.findViewById( R.id.grid_item_text );
+			tv.setText( mAppsList.get( position ).loadLabel( mPackageManager ) );
 		}
-		imageView.setImageDrawable( mAppsList.get( position ).loadIcon( mPackageManager ) );
-		imageView.setOnClickListener( new OnClickListener() {
+		myView.setOnClickListener( new OnClickListener() {
 			
 			@Override
 			public void onClick(
@@ -88,7 +88,7 @@ public class ImageAdapter extends BaseAdapter
 				mContext.startActivity( LaunchIntent );
 			}
 		} );
-		imageView.setOnLongClickListener( new OnLongClickListener() {
+		myView.setOnLongClickListener( new OnLongClickListener() {
 			
 			@Override
 			public boolean onLongClick(
@@ -101,6 +101,6 @@ public class ImageAdapter extends BaseAdapter
 				return true;
 			}
 		} );
-		return imageView;
+		return myView;
 	}
 }
