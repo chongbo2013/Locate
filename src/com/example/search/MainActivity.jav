@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -19,17 +20,22 @@ import android.widget.ImageButton;
 public class MainActivity extends Activity
 {
 	
+	public static final String TAG = "MainActivity";
 	private Context mContext;
 	private GridView mGridView;
 	private EditText mEditText;
 	private ImageButton mImageButton;
 	private TextWatcher mTextWatcher = new TextWatcher() {
 		
+		long seconds_be , seconds_af;
+		
 		@Override
 		public void afterTextChanged(
 				Editable s )
 		{
 			// TODO Auto-generated method stub
+			seconds_af = System.currentTimeMillis();
+			Log.d( TAG , "" + ( seconds_af - seconds_be ) );
 		}
 		
 		@Override
@@ -40,6 +46,7 @@ public class MainActivity extends Activity
 				int arg3 )
 		{
 			// TODO Auto-generated method stub
+			seconds_be = System.currentTimeMillis();
 		}
 		
 		@Override

@@ -22,26 +22,10 @@ public class SearchContact
 	
 	private static SearchContact mSearchContact;
 	private static Context mContext;
+	private List<ContactInfo> mContactList = new ArrayList<ContactInfo>();
 	
 	private SearchContact()
 	{
-	}
-	
-	public static SearchContact getInstance(
-			Context c )
-	{
-		if( mSearchContact == null )
-		{
-			mSearchContact = new SearchContact();
-			mContext = c;
-		}
-		return mSearchContact;
-	}
-	
-	public List<Object> search(
-			String str )
-	{
-		List<Object> contactList = new ArrayList<Object>();
 		ContentResolver cr = mContext.getContentResolver();
 		Cursor cur = cr.query( ContactsContract.Contacts.CONTENT_URI , null , null , null , null );
 		if( cur.getCount() > 0 )
@@ -56,18 +40,40 @@ public class SearchContact
 					while( pCur.moveToNext() )
 					{
 						String phoneNo = pCur.getString( pCur.getColumnIndex( ContactsContract.CommonDataKinds.Phone.NUMBER ) );
-						if( name.toLowerCase().contains( str.toLowerCase() ) )
-						{
-							InputStream is = openPhoto( Long.valueOf( id ) );
-							Bitmap photo = BitmapFactory.decodeStream( is );
-							contactList.add( new ContactInfo( Long.valueOf( id ) , name , phoneNo , photo ) );
-						}
+						InputStream is = openPhoto( Long.valueOf( id ) );
+						Bitmap photo = BitmapFactory.decodeStream( is );
+						mContactList.add( new ContactInfo( Long.valueOf( id ) , name , phoneNo , photo ) );
 					}
 					pCur.close();
 				}
 			}
 		}
-		return contactList;
+	}
+	
+	public static SearchContact getInstance(
+			Context c )
+	{
+		if( mSearchContact == null )
+		{
+			mContext = c;
+			mSearchContact = new SearchContact();
+		}
+		return mSearchContact;
+	}
+	
+	public List<Object> search(
+			String str )
+	{
+		List<Object> resultList = new ArrayList<Object>();
+		for( ContactInfo contactInfo : mContactList )
+		{
+			String name = contactInfo.getName();
+			if( name.toLowerCase().contains( str.toLowerCase() ) )
+			{
+				resultList.add( contactInfo );
+			}
+		}
+		return resultList;
 	}
 	
 	private InputStream openPhoto(
