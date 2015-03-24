@@ -81,14 +81,6 @@ public class MainActivity extends Activity
 		inputMethodManager.hideSoftInputFromWindow( getCurrentFocus().getWindowToken() , 0 );
 	}
 	
-	@Override
-	protected void onResume()
-	{
-		super.onResume();
-		// Clear the search content when the activity is paused
-		mEditText.setText( "" );
-	}
-	
 	/**
 	 * When user click the cancel icon, we should clear the search content
 	 *
@@ -97,6 +89,10 @@ public class MainActivity extends Activity
 	public void clearSearchContent(
 			View view )
 	{
+		// remove the text watcher before clear the search content
+		mEditText.removeTextChangedListener( mTextWatcher );
 		mEditText.setText( "" );
+		// set the text watcher after clear the search content
+		mEditText.addTextChangedListener( mTextWatcher );
 	}
 }
