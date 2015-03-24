@@ -22,6 +22,7 @@ public class MainActivity extends Activity
 	private Context mContext;
 	private GridView mGridView;
 	private EditText mEditText;
+	private ImageButton mImageButton;
 	private TextWatcher mTextWatcher = new TextWatcher() {
 		
 		@Override
@@ -49,12 +50,10 @@ public class MainActivity extends Activity
 				int arg3 )
 		{
 			// Set the visibility of cancel icon according to whether empty
-			ImageButton cancel = (ImageButton)findViewById( R.id.imageButton2 );
 			int visibility = s.toString().equals( "" ) ? View.GONE : View.VISIBLE;
-			cancel.setVisibility( visibility );
+			mImageButton.setVisibility( visibility );
 			// Do the searching
-			SearchProxy proxy = SearchProxy.getInstance( mContext );
-			List<Object> list = proxy.search( String.valueOf( s ) );
+			List<Object> list = SearchProxy.getInstance( mContext ).search( String.valueOf( s ) );
 			mGridView.setAdapter( new ImageAdapter( mContext , list ) );
 		}
 	};
@@ -68,6 +67,7 @@ public class MainActivity extends Activity
 		Intent startIntent = new Intent( this , SearchService.class );
 		startService( startIntent );
 		mContext = this;
+		mImageButton = (ImageButton)findViewById( R.id.imageButton2 );
 		mGridView = (GridView)findViewById( R.id.gridView );
 		mEditText = (EditText)findViewById( R.id.editText );
 		mEditText.addTextChangedListener( mTextWatcher );
@@ -91,6 +91,7 @@ public class MainActivity extends Activity
 	{
 		// remove the text watcher before clear the search content
 		mEditText.removeTextChangedListener( mTextWatcher );
+		mImageButton.setVisibility( View.GONE );
 		mEditText.setText( "" );
 		// set the text watcher after clear the search content
 		mEditText.addTextChangedListener( mTextWatcher );
