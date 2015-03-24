@@ -31,10 +31,10 @@ public class SearchProxy
 		return mSearchProxy;
 	}
 	
-	public List<ResolveInfo> search(
+	public List<Object> search(
 			String str )
 	{
-		List<ResolveInfo> appInfo = new ArrayList<ResolveInfo>();
+		List<Object> appInfo = new ArrayList<Object>();
 		PackageManager pm = mContext.getPackageManager();
 		Intent i = new Intent( Intent.ACTION_MAIN );
 		i.addCategory( Intent.CATEGORY_LAUNCHER );
