@@ -34,6 +34,8 @@ public class SearchProxy
 		List<Object> resultList = new ArrayList<Object>();
 		// search application
 		resultList.addAll( SearchApp.getInstance( mContext ).search( String.valueOf( str ) ) );
+		// search contact
+		resultList.addAll( SearchContact.getInstance( mContext ).search( String.valueOf( str ) ) );
 		return resultList;
 	}
 }

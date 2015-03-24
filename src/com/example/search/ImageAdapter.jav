@@ -108,6 +108,22 @@ public class ImageAdapter extends BaseAdapter
 				}
 			} );
 		}
+		if( mResultList.get( position ) instanceof ContactInfo )
+		{
+			ContactInfo contactInfo = (ContactInfo)mResultList.get( position );
+			if( convertView == null )
+			{
+				//Inflate the layout
+				LayoutInflater inflater = (LayoutInflater)mContext.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+				myView = inflater.inflate( R.layout.grid_item , null );
+				// Add The Image!!!           
+				ImageView iv = (ImageView)myView.findViewById( R.id.grid_item_image );
+				iv.setImageBitmap( contactInfo.getPhoto() );
+				// Add The Text!!!
+				TextView tv = (TextView)myView.findViewById( R.id.grid_item_text );
+				tv.setText( contactInfo.getName() );
+			}
+		}
 		return myView;
 	}
 }
