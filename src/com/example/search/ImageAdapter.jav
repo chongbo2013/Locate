@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -111,7 +112,7 @@ public class ImageAdapter extends BaseAdapter
 		}
 		if( mResultList.get( position ) instanceof ContactInfo )
 		{
-			ContactInfo contactInfo = (ContactInfo)mResultList.get( position );
+			final ContactInfo contactInfo = (ContactInfo)mResultList.get( position );
 			if( convertView == null )
 			{
 				//Inflate the layout
@@ -127,6 +128,19 @@ public class ImageAdapter extends BaseAdapter
 				TextView tv = (TextView)myView.findViewById( R.id.grid_item_text );
 				tv.setText( contactInfo.getName() );
 			}
+			myView.setOnClickListener( new OnClickListener() {
+				
+				@Override
+				public void onClick(
+						View v )
+				{
+					// when clicked get into the detail information of the contact
+					Intent intent = new Intent( Intent.ACTION_VIEW );
+					Uri uri = Uri.withAppendedPath( ContactsContract.Contacts.CONTENT_URI , String.valueOf( contactInfo.getId() ) );
+					intent.setData( uri );
+					mContext.startActivity( intent );
+				}
+			} );
 		}
 		return myView;
 	}
