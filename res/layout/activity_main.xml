@@ -46,6 +46,12 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textView_statistics"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp" />
+
     <GridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"

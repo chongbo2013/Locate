@@ -9,12 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 
 public class MainActivity extends Activity
@@ -25,6 +25,8 @@ public class MainActivity extends Activity
 	private GridView mGridView;
 	private EditText mEditText;
 	private ImageButton mImageButton;
+	private TextView mTextView;
+	private List<Object> resultList;
 	private TextWatcher mTextWatcher = new TextWatcher() {
 		
 		long seconds_be , seconds_af;
@@ -35,7 +37,8 @@ public class MainActivity extends Activity
 		{
 			// TODO Auto-generated method stub
 			seconds_af = System.currentTimeMillis();
-			Log.d( TAG , "" + ( seconds_af - seconds_be ) );
+			int resultNum = resultList.size();
+			mTextView.setText( "总计：" + resultNum + " 个。 耗时：" + String.valueOf( seconds_af - seconds_be ) + " 毫秒。" );
 		}
 		
 		@Override
@@ -60,8 +63,8 @@ public class MainActivity extends Activity
 			int visibility = s.toString().equals( "" ) ? View.GONE : View.VISIBLE;
 			mImageButton.setVisibility( visibility );
 			// Do the searching
-			List<Object> list = SearchProxy.getInstance( mContext ).search( String.valueOf( s ) );
-			mGridView.setAdapter( new ImageAdapter( mContext , list ) );
+			resultList = SearchProxy.getInstance( mContext ).search( String.valueOf( s ) );
+			mGridView.setAdapter( new ImageAdapter( mContext , resultList ) );
 		}
 	};
 	
@@ -75,6 +78,7 @@ public class MainActivity extends Activity
 		startService( startIntent );
 		mContext = this;
 		mImageButton = (ImageButton)findViewById( R.id.imageButton2 );
+		mTextView = (TextView)findViewById( R.id.textView_statistics );
 		mGridView = (GridView)findViewById( R.id.gridView );
 		mEditText = (EditText)findViewById( R.id.editText );
 		mEditText.addTextChangedListener( mTextWatcher );
