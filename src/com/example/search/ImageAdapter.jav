@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,7 +119,10 @@ public class ImageAdapter extends BaseAdapter
 				myView = inflater.inflate( R.layout.grid_item , null );
 				// Add The Image!!!           
 				ImageView iv = (ImageView)myView.findViewById( R.id.grid_item_image );
-				iv.setImageBitmap( contactInfo.getPhoto() );
+				// Only set the photo when not empty otherwise use default contact photo
+				Bitmap photo = contactInfo.getPhoto();
+				if( photo != null )
+					iv.setImageBitmap( contactInfo.getPhoto() );
 				// Add The Text!!!
 				TextView tv = (TextView)myView.findViewById( R.id.grid_item_text );
 				tv.setText( contactInfo.getName() );
