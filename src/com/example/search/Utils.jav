@@ -189,9 +189,12 @@ public class Utils
 			String str )
 	{
 		String result = "";
-		for( String s : str.split( " " ) )
+		if( !str.isEmpty() )
 		{
-			result += s.charAt( 0 );
+			for( String s : str.split( " " ) )
+			{
+				result += s.charAt( 0 );
+			}
 		}
 		return result;
 	}

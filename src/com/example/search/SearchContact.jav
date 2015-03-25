@@ -68,10 +68,11 @@ public class SearchContact
 		for( ContactInfo contactInfo : mContactList )
 		{
 			String name = contactInfo.getName();
-			if( name.toLowerCase().contains( str.toLowerCase() ) )
-			{
+			String pinyin = Utils.chinese2pinyin( name );
+			String pinyin_short = Utils.getFirstLetter( pinyin );
+			String searchable_name = name + pinyin + pinyin_short;
+			if( searchable_name.toLowerCase().contains( str.toLowerCase() ) )
 				resultList.add( contactInfo );
-			}
 		}
 		return resultList;
 	}
