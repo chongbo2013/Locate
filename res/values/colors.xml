@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="search_bar">#cccccc</color>
-    <color name="search_bar_bg">#333333</color>
+    <color name="search_bar">#FAFAFA</color>
 </resources>

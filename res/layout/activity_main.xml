@@ -9,9 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
-        android:background="@color/search_bar_bg"
         android:orientation="horizontal"
-        android:padding="6dp"
         android:weightSum="1" >
 
         <ImageButton
