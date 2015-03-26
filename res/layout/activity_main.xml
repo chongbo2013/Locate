@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:background="@color/search_bar"
             android:contentDescription="@string/abc_action_bar_home_description"
-            android:src="@mipmap/ic_android_black_24dp" />
+            android:src="@mipmap/ic_locate" />
 
         <EditText
             android:id="@+id/editText"
