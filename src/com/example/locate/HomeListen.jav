@@ -60,12 +60,12 @@ public class HomeListen
 				{
 					if( reason.equals( "homekey" ) )
 					{
-						// ��Home����  
+						// 按Home按键 
 						mOnHomeBtnPressListener.onHomeBtnPress();
 					}
 					else if( reason.equals( "assist" ) )
 					{
-						// ����Home����  
+						// 长按Home按键
 						mOnHomeBtnPressListener.onHomeBtnLongPress();
 					}
 				}
