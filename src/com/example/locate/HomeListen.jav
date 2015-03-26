@@ -1,4 +1,4 @@
-package com.example.search;
+package com.example.locate;
 
 
 import android.content.BroadcastReceiver;
@@ -60,12 +60,12 @@ public class HomeListen
 				{
 					if( reason.equals( "homekey" ) )
 					{
-						// 按Home按键  
+						// ��Home����  
 						mOnHomeBtnPressListener.onHomeBtnPress();
 					}
 					else if( reason.equals( "assist" ) )
 					{
-						// 长按Home按键  
+						// ����Home����  
 						mOnHomeBtnPressListener.onHomeBtnLongPress();
 					}
 				}

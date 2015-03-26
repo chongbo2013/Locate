@@ -1,4 +1,4 @@
-package com.example.search;
+package com.example.locate;
 
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class MainActivity extends Activity
 			// TODO Auto-generated method stub
 			seconds_af = System.currentTimeMillis();
 			int resultNum = resultList.size();
-			mTextView.setText( "总计：" + resultNum + " 个。 耗时：" + String.valueOf( seconds_af - seconds_be ) + " 毫秒。" );
+			mTextView.setText( "总计：" + resultNum + " 个。耗时：" + String.valueOf( seconds_af - seconds_be ) + " 毫秒。" );
 		}
 		
 		@Override

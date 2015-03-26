@@ -1,4 +1,4 @@
-package com.example.search;
+package com.example.locate;
 
 
 import java.util.ArrayList;
