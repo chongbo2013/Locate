@@ -17,7 +17,7 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 
 
-public class SearchContact
+public class SearchContact implements Searchable
 {
 	
 	private static SearchContact mSearchContact;
@@ -61,6 +61,7 @@ public class SearchContact
 		return mSearchContact;
 	}
 	
+	@Override
 	public List<Object> search(
 			String str )
 	{

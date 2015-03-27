@@ -10,7 +10,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
 
-public class SearchApp
+public class SearchApp implements Searchable
 {
 	
 	private static SearchApp mSearchApp;
@@ -31,6 +31,7 @@ public class SearchApp
 		return mSearchApp;
 	}
 	
+	@Override
 	public List<Object> search(
 			String str )
 	{
