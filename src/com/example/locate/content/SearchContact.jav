@@ -6,8 +6,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.locate.tools.Utils;
-
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -17,6 +15,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
+
+import com.example.locate.Locate;
+import com.example.locate.tools.Utils;
 
 
 public class SearchContact implements Searchable
@@ -52,12 +53,11 @@ public class SearchContact implements Searchable
 		}
 	}
 	
-	public static SearchContact getInstance(
-			Context c )
+	public static SearchContact getInstance()
 	{
 		if( mSearchContact == null )
 		{
-			mContext = c;
+			mContext = Locate.mContext;
 			mSearchContact = new SearchContact();
 		}
 		return mSearchContact;

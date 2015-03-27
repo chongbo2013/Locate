@@ -1,7 +1,6 @@
 package com.example.locate.content;
 
 
-import com.example.locate.Locate;
 import com.example.locate.Locate.Range;
 
 
@@ -26,10 +25,10 @@ public class SearchFactory
 		switch( r )
 		{
 			case APP:
-				s = SearchApp.getInstance( Locate.mContext );
+				s = SearchApp.getInstance();
 				break;
 			case CONTACT:
-				s = SearchContact.getInstance( Locate.mContext );
+				s = SearchContact.getInstance();
 				break;
 		}
 		return s;

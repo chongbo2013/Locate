@@ -4,12 +4,13 @@ package com.example.locate.content;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.locate.tools.Utils;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+
+import com.example.locate.Locate;
+import com.example.locate.tools.Utils;
 
 
 public class SearchApp implements Searchable
@@ -20,16 +21,13 @@ public class SearchApp implements Searchable
 	
 	private SearchApp()
 	{
+		mContext = Locate.mContext;
 	}
 	
-	public static SearchApp getInstance(
-			Context c )
+	public static SearchApp getInstance()
 	{
 		if( mSearchApp == null )
-		{
 			mSearchApp = new SearchApp();
-			mContext = c;
-		}
 		return mSearchApp;
 	}
 	
