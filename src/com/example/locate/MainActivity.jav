@@ -63,7 +63,7 @@ public class MainActivity extends Activity
 			int visibility = s.toString().equals( "" ) ? View.GONE : View.VISIBLE;
 			mImageButton.setVisibility( visibility );
 			// Do the searching
-			resultList = SearchProxy.getInstance( mContext ).search( String.valueOf( s ) );
+			resultList = SearchAccordingToSettings.getInstance( mContext ).search( String.valueOf( s ) );
 			mGridView.setAdapter( new ImageAdapter( mContext , resultList ) );
 		}
 	};
