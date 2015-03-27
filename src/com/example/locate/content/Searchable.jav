@@ -1,4 +1,4 @@
-package com.example.locate;
+package com.example.locate.content;
 
 
 import java.util.List;

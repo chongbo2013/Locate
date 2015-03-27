@@ -1,8 +1,10 @@
-package com.example.locate;
+package com.example.locate.content;
 
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.locate.tools.Utils;
 
 import android.content.Context;
 import android.content.Intent;

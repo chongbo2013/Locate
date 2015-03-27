@@ -1,4 +1,4 @@
-package com.example.locate;
+package com.example.locate.ui;
 
 
 import java.util.List;
@@ -15,6 +15,11 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.example.locate.Locate;
+import com.example.locate.R;
+import com.example.locate.adapter.ImageAdapter;
+import com.example.locate.service.SearchService;
 
 
 public class MainActivity extends Activity
@@ -63,7 +68,7 @@ public class MainActivity extends Activity
 			int visibility = s.toString().equals( "" ) ? View.GONE : View.VISIBLE;
 			mImageButton.setVisibility( visibility );
 			// Do the searching
-			resultList = SearchAccordingToSettings.getInstance( mContext ).search( String.valueOf( s ) );
+			resultList = Locate.getInstance( mContext ).search( String.valueOf( s ) );
 			mGridView.setAdapter( new ImageAdapter( mContext , resultList ) );
 		}
 	};

@@ -1,4 +1,4 @@
-package com.example.locate;
+package com.example.locate.service;
 
 
 import android.app.Service;
@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.example.locate.HomeListen.OnHomeBtnPressLitener;
+import com.example.locate.listener.HomeListen;
+import com.example.locate.listener.HomeListen.OnHomeBtnPressLitener;
+import com.example.locate.ui.MainActivity;
 
 
 public class SearchService extends Service

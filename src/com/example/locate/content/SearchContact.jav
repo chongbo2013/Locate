@@ -1,10 +1,12 @@
-package com.example.locate;
+package com.example.locate.content;
 
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.locate.tools.Utils;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -106,7 +108,7 @@ public class SearchContact implements Searchable
 		return null;
 	}
 	
-	class ContactInfo
+	public class ContactInfo
 	{
 		
 		private long id;

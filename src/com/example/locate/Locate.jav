@@ -6,6 +6,8 @@ import java.util.List;
 
 import android.content.Context;
 
+import com.example.locate.content.SearchFactory;
+
 
 /**
  * Search according to the settings
@@ -13,7 +15,7 @@ import android.content.Context;
  * It's up to user to decide search range, applications or contact or...
  * search order application first or contact first and so on
  */
-public class SearchAccordingToSettings
+public class Locate
 {
 	
 	public enum Range
@@ -21,20 +23,26 @@ public class SearchAccordingToSettings
 		APP , CONTACT
 	}
 	
-	private static SearchAccordingToSettings mSearchProxy;
+	private static Locate mLocate;
 	public static Context mContext;
 	
-	public static SearchAccordingToSettings getInstance(
+	public static Locate getInstance(
 			Context c )
 	{
-		if( mSearchProxy == null )
+		if( mLocate == null )
 		{
-			mSearchProxy = new SearchAccordingToSettings();
+			mLocate = new Locate();
 			mContext = c;
 		}
-		return mSearchProxy;
+		return mLocate;
 	}
 	
+	/**
+	 * Main function for the entire application
+	 * 
+	 * @param str
+	 * @return
+	 */
 	public List<Object> search(
 			String str )
 	{

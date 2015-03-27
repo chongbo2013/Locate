@@ -1,4 +1,4 @@
-package com.example.locate;
+package com.example.locate.adapter;
 
 
 import java.util.List;
@@ -18,6 +18,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.locate.R;
+import com.example.locate.content.SearchContact.ContactInfo;
 
 
 public class ImageAdapter extends BaseAdapter

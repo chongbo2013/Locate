@@ -1,7 +1,8 @@
-package com.example.locate;
+package com.example.locate.content;
 
 
-import com.example.locate.SearchAccordingToSettings.Range;
+import com.example.locate.Locate;
+import com.example.locate.Locate.Range;
 
 
 /**
@@ -25,10 +26,10 @@ public class SearchFactory
 		switch( r )
 		{
 			case APP:
-				s = SearchApp.getInstance( SearchAccordingToSettings.mContext );
+				s = SearchApp.getInstance( Locate.mContext );
 				break;
 			case CONTACT:
-				s = SearchContact.getInstance( SearchAccordingToSettings.mContext );
+				s = SearchContact.getInstance( Locate.mContext );
 				break;
 		}
 		return s;
