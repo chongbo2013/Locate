@@ -8,7 +8,6 @@ import java.util.List;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
-import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,20 +15,22 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 
-import com.example.locate.Locate;
+import com.example.locate.service.SearchService;
 import com.example.locate.tools.Utils;
 
 
-public class SearchContact implements Searchable
+/**
+ * All the contacts in your android device
+ */
+public class Contact implements Searchable
 {
 	
-	private static SearchContact mSearchContact;
-	private static Context mContext;
+	private static Contact mContact;
 	private List<ContactInfo> mContactList = new ArrayList<ContactInfo>();
 	
-	private SearchContact()
+	private Contact()
 	{
-		ContentResolver cr = mContext.getContentResolver();
+		ContentResolver cr = SearchService.mContext.getContentResolver();
 		Cursor cur = cr.query( ContactsContract.Contacts.CONTENT_URI , null , null , null , null );
 		if( cur.getCount() > 0 )
 		{
@@ -53,14 +54,16 @@ public class SearchContact implements Searchable
 		}
 	}
 	
-	public static SearchContact getInstance()
+	public static Contact getInstance()
 	{
-		if( mSearchContact == null )
-		{
-			mContext = Locate.mContext;
-			mSearchContact = new SearchContact();
-		}
-		return mSearchContact;
+		if( mContact == null )
+			mContact = new Contact();
+		return mContact;
+	}
+	
+	public List<ContactInfo> getContactList()
+	{
+		return mContactList;
 	}
 	
 	@Override
@@ -68,6 +71,7 @@ public class SearchContact implements Searchable
 			String str )
 	{
 		List<Object> resultList = new ArrayList<Object>();
+		List<ContactInfo> mContactList = SearchService.mContactList;
 		for( ContactInfo contactInfo : mContactList )
 		{
 			String name = contactInfo.getName();
@@ -80,12 +84,18 @@ public class SearchContact implements Searchable
 		return resultList;
 	}
 	
+	/**
+	 * Load the contact photo
+	 * 
+	 * @param contactId
+	 * @return
+	 */
 	private InputStream openPhoto(
 			long contactId )
 	{
 		Uri contactUri = ContentUris.withAppendedId( Contacts.CONTENT_URI , contactId );
 		Uri photoUri = Uri.withAppendedPath( contactUri , Contacts.Photo.CONTENT_DIRECTORY );
-		Cursor cursor = mContext.getContentResolver().query( photoUri , new String[]{ Contacts.Photo.PHOTO } , null , null , null );
+		Cursor cursor = SearchService.mContext.getContentResolver().query( photoUri , new String[]{ Contacts.Photo.PHOTO } , null , null , null );
 		if( cursor == null )
 		{
 			return null;
@@ -106,46 +116,5 @@ public class SearchContact implements Searchable
 			cursor.close();
 		}
 		return null;
-	}
-	
-	public class ContactInfo
-	{
-		
-		private long id;
-		private String name;
-		private String phoneNo;
-		private Bitmap photo;
-		
-		public ContactInfo(
-				long id ,
-				String name ,
-				String phoneNo ,
-				Bitmap photo )
-		{
-			this.id = id;
-			this.name = name;
-			this.phoneNo = phoneNo;
-			this.photo = photo;
-		}
-		
-		public long getId()
-		{
-			return id;
-		}
-		
-		public String getName()
-		{
-			return name;
-		}
-		
-		public String getPhoneNo()
-		{
-			return phoneNo;
-		}
-		
-		public Bitmap getPhoto()
-		{
-			return photo;
-		}
 	}
 }

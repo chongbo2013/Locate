@@ -1,27 +1,44 @@
 package com.example.locate.service;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.IBinder;
 
+import com.example.locate.content.Application;
+import com.example.locate.content.ContactInfo;
+import com.example.locate.content.Contact;
 import com.example.locate.listener.HomeListen;
 import com.example.locate.listener.HomeListen.OnHomeBtnPressLitener;
+import com.example.locate.tools.Utils;
 import com.example.locate.ui.MainActivity;
 
 
 public class SearchService extends Service
 {
 	
-	private Context mContext;
+	public static Context mContext;
+	public static List<ContactInfo> mContactList = new ArrayList<ContactInfo>();
+	public static List<ResolveInfo> allAppInfo = new ArrayList<ResolveInfo>();
+	public static List<String> appPinyin = new ArrayList<String>();
+	public static PackageManager pm;
 	
 	@Override
 	public void onCreate()
 	{
 		super.onCreate();
 		mContext = this;
+		pm = mContext.getPackageManager();
 		initHomeListen();
+		mContactList = Contact.getInstance().getContactList();
+		allAppInfo = Application.getInstance().getAllAppList();
+		initAppPinyin();
 	}
 	
 	@Override
@@ -69,4 +86,17 @@ public class SearchService extends Service
 	}
 	
 	private HomeListen mHomeListen = null;
+	
+	private void initAppPinyin()
+	{
+		for( ResolveInfo info : allAppInfo )
+		{
+			// Original name
+			String original = String.valueOf( info.loadLabel( SearchService.pm ) );
+			// After convert the origin name to pinyin
+			String pinyin = Utils.chinese2pinyin( original );
+			String name = original + pinyin + Utils.getFirstLetter( pinyin );
+			appPinyin.add( name );
+		}
+	}
 }

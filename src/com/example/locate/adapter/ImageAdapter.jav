@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.locate.R;
-import com.example.locate.content.SearchContact.ContactInfo;
+import com.example.locate.content.ContactInfo;
 
 
 public class ImageAdapter extends BaseAdapter
