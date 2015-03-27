@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 
 import com.example.locate.service.SearchService;
+import com.example.locate.tools.Utils;
 
 
 /**
@@ -18,12 +19,22 @@ public class Application implements Searchable
 	
 	private static Application mApplication;
 	private List<ResolveInfo> mResolveInfoList = new ArrayList<ResolveInfo>();
+	private List<String> searchableStr = new ArrayList<String>();
 	
 	private Application()
 	{
 		Intent i = new Intent( Intent.ACTION_MAIN );
 		i.addCategory( Intent.CATEGORY_LAUNCHER );
 		mResolveInfoList = SearchService.mContext.getPackageManager().queryIntentActivities( i , 0 );
+		for( ResolveInfo info : mResolveInfoList )
+		{
+			// Original name
+			String original = String.valueOf( info.loadLabel( SearchService.mContext.getPackageManager() ) );
+			// After convert the origin name to pinyin
+			String pinyin = Utils.chinese2pinyin( original );
+			String name = original + pinyin + Utils.getFirstLetter( pinyin );
+			searchableStr.add( name );
+		}
 	}
 	
 	public static Application getInstance()
@@ -33,22 +44,16 @@ public class Application implements Searchable
 		return mApplication;
 	}
 	
-	public List<ResolveInfo> getAllAppList()
-	{
-		return mResolveInfoList;
-	}
-	
 	@Override
 	public List<Object> search(
 			String str )
 	{
-		List<ResolveInfo> allAppInfo = SearchService.allAppInfo;
 		List<Object> appInfo = new ArrayList<Object>();
-		for( int i = 0 ; i < allAppInfo.size() ; i++ )
+		for( String name : searchableStr )
 		{
-			if( SearchService.appPinyin.get( i ).toLowerCase().contains( str.toLowerCase() ) )
+			if( name.toLowerCase().contains( str.toLowerCase() ) )
 			{
-				appInfo.add( allAppInfo.get( i ) );
+				appInfo.add( mResolveInfoList.get( searchableStr.indexOf( name ) ) );
 			}
 		}
 		return appInfo;

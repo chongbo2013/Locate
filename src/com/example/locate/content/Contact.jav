@@ -27,6 +27,7 @@ public class Contact implements Searchable
 	
 	private static Contact mContact;
 	private List<ContactInfo> mContactList = new ArrayList<ContactInfo>();
+	private List<String> searchableStr = new ArrayList<String>();
 	
 	private Contact()
 	{
@@ -52,6 +53,14 @@ public class Contact implements Searchable
 				}
 			}
 		}
+		for( ContactInfo info : mContactList )
+		{
+			String name = info.getName();
+			String pinyin = Utils.chinese2pinyin( name );
+			String pinyin_short = Utils.getFirstLetter( pinyin );
+			String searchable_name = name + pinyin + pinyin_short;
+			searchableStr.add( searchable_name );
+		}
 	}
 	
 	public static Contact getInstance()
@@ -61,25 +70,17 @@ public class Contact implements Searchable
 		return mContact;
 	}
 	
-	public List<ContactInfo> getContactList()
-	{
-		return mContactList;
-	}
-	
 	@Override
 	public List<Object> search(
 			String str )
 	{
 		List<Object> resultList = new ArrayList<Object>();
-		List<ContactInfo> mContactList = SearchService.mContactList;
-		for( ContactInfo contactInfo : mContactList )
+		for( String name : searchableStr )
 		{
-			String name = contactInfo.getName();
-			String pinyin = Utils.chinese2pinyin( name );
-			String pinyin_short = Utils.getFirstLetter( pinyin );
-			String searchable_name = name + pinyin + pinyin_short;
-			if( searchable_name.toLowerCase().contains( str.toLowerCase() ) )
-				resultList.add( contactInfo );
+			if( name.toLowerCase().contains( str.toLowerCase() ) )
+			{
+				resultList.add( mContactList.get( searchableStr.indexOf( name ) ) );
+			}
 		}
 		return resultList;
 	}
