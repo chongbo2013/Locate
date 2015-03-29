@@ -25,10 +25,10 @@ public class SearchFactory
 		switch( r )
 		{
 			case APP:
-				s = SearchApp.getInstance();
+				s = Application.getInstance();
 				break;
 			case CONTACT:
-				s = SearchContact.getInstance();
+				s = Contact.getInstance();
 				break;
 		}
 		return s;
