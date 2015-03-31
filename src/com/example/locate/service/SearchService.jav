@@ -65,6 +65,7 @@ public class SearchService extends Service
 			@Override
 			public void onHomeBtnLongPress()
 			{
+				Toast.makeText( mContext , "HomeBtn LongPressed!" , Toast.LENGTH_SHORT ).show();
 				Intent intent = new Intent( mContext , MainActivity.class );
 				intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
 				startActivity( intent );
