@@ -1,10 +1,11 @@
 # Locate
-Just a application for fast search in Android
+It has never been so fast to search Chinese content on Android.
 
 ### Dependency
 * [pinyin4j](http://pinyin4j.sourceforge.net)
 
 ### Licence
+-
 The MIT License (MIT)
 
 Copyright (c) 2015 Oliver
