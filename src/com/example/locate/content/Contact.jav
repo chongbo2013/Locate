@@ -8,9 +8,11 @@ import java.util.List;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
@@ -24,98 +26,104 @@ import com.example.locate.tools.Utils;
  */
 public class Contact implements Searchable
 {
-	
-	private static Contact mContact;
-	private List<ContactInfo> mContactList = new ArrayList<ContactInfo>();
-	private List<String> searchableStr = new ArrayList<String>();
-	
-	private Contact()
-	{
-		ContentResolver cr = SearchService.mContext.getContentResolver();
-		Cursor cur = cr.query( ContactsContract.Contacts.CONTENT_URI , null , null , null , null );
-		if( cur.getCount() > 0 )
-		{
-			while( cur.moveToNext() )
-			{
-				String id = cur.getString( cur.getColumnIndex( ContactsContract.Contacts._ID ) );
-				String name = cur.getString( cur.getColumnIndex( ContactsContract.Contacts.DISPLAY_NAME ) );
-				if( Integer.parseInt( cur.getString( cur.getColumnIndex( ContactsContract.Contacts.HAS_PHONE_NUMBER ) ) ) > 0 )
-				{
-					Cursor pCur = cr.query( ContactsContract.CommonDataKinds.Phone.CONTENT_URI , null , ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?" , new String[]{ id } , null );
-					while( pCur.moveToNext() )
-					{
-						String phoneNo = pCur.getString( pCur.getColumnIndex( ContactsContract.CommonDataKinds.Phone.NUMBER ) );
-						InputStream is = openPhoto( Long.valueOf( id ) );
-						Bitmap photo = BitmapFactory.decodeStream( is );
-						mContactList.add( new ContactInfo( Long.valueOf( id ) , name , phoneNo , photo ) );
-					}
-					pCur.close();
-				}
-			}
-		}
-		for( ContactInfo info : mContactList )
-		{
-			String name = info.getName();
-			String pinyin = Utils.chinese2pinyin( name );
-			String pinyin_short = Utils.getFirstLetter( pinyin );
-			String searchable_name = name + pinyin + pinyin_short;
-			searchableStr.add( searchable_name );
-		}
-	}
-	
-	public static Contact getInstance()
-	{
-		if( mContact == null )
-			mContact = new Contact();
-		return mContact;
-	}
-	
-	@Override
-	public List<Object> search(
-			String str )
-	{
-		List<Object> resultList = new ArrayList<Object>();
-		for( String name : searchableStr )
-		{
-			if( name.toLowerCase().contains( str.toLowerCase() ) )
-			{
-				resultList.add( mContactList.get( searchableStr.indexOf( name ) ) );
-			}
-		}
-		return resultList;
-	}
-	
-	/**
-	 * Load the contact photo
-	 * 
-	 * @param contactId
-	 * @return
-	 */
-	private InputStream openPhoto(
-			long contactId )
-	{
-		Uri contactUri = ContentUris.withAppendedId( Contacts.CONTENT_URI , contactId );
-		Uri photoUri = Uri.withAppendedPath( contactUri , Contacts.Photo.CONTENT_DIRECTORY );
-		Cursor cursor = SearchService.mContext.getContentResolver().query( photoUri , new String[]{ Contacts.Photo.PHOTO } , null , null , null );
-		if( cursor == null )
-		{
-			return null;
-		}
-		try
-		{
-			if( cursor.moveToFirst() )
-			{
-				byte[] data = cursor.getBlob( 0 );
-				if( data != null )
-				{
-					return new ByteArrayInputStream( data );
-				}
-			}
-		}
-		finally
-		{
-			cursor.close();
-		}
-		return null;
-	}
+
+    private static Contact mContact;
+    private List<ContactInfo> mContactList = new ArrayList<ContactInfo>();
+    private List<SearchResultInfo> mSearchResultInfoList = new ArrayList<SearchResultInfo>();
+    private List<String> searchableStr = new ArrayList<String>();
+
+    private Contact()
+    {
+        ContentResolver cr = SearchService.mContext.getContentResolver();
+        Cursor cur = cr.query( ContactsContract.Contacts.CONTENT_URI , null , null , null , null );
+        if( cur.getCount() > 0 )
+        {
+            while( cur.moveToNext() )
+            {
+                String id = cur.getString( cur.getColumnIndex( ContactsContract.Contacts._ID ) );
+                String name = cur.getString( cur.getColumnIndex( ContactsContract.Contacts.DISPLAY_NAME ) );
+                if( Integer.parseInt( cur.getString( cur.getColumnIndex( ContactsContract.Contacts.HAS_PHONE_NUMBER ) ) ) > 0 )
+                {
+                    Cursor pCur = cr.query( ContactsContract.CommonDataKinds.Phone.CONTENT_URI , null , ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?" , new String[]{ id } , null );
+                    while( pCur.moveToNext() )
+                    {
+                        String phoneNo = pCur.getString( pCur.getColumnIndex( ContactsContract.CommonDataKinds.Phone.NUMBER ) );
+                        InputStream is = openPhoto( Long.valueOf( id ) );
+                        Bitmap photo = BitmapFactory.decodeStream( is );
+                        mContactList.add( new ContactInfo( Long.valueOf( id ) , name , phoneNo , photo ) );
+                        // when clicked get into the detail information of the contact
+                        Intent intent = new Intent( Intent.ACTION_VIEW );
+                        Uri uri = Uri.withAppendedPath( ContactsContract.Contacts.CONTENT_URI , String.valueOf( Long.valueOf(id) ) );
+                        intent.setData( uri );
+                        mSearchResultInfoList.add(new SearchResultInfo(name, new BitmapDrawable(SearchService.mContext.getResources(),photo), intent));
+                    }
+                    pCur.close();
+                }
+            }
+        }
+        for( ContactInfo info : mContactList )
+        {
+            String name = info.getName();
+            String pinyin = Utils.chinese2pinyin( name );
+            String pinyin_short = Utils.getFirstLetter( pinyin );
+            String searchable_name = name + pinyin + pinyin_short;
+            searchableStr.add( searchable_name );
+        }
+    }
+
+    public static Contact getInstance()
+    {
+        if( mContact == null )
+            mContact = new Contact();
+        return mContact;
+    }
+
+    @Override
+    public List<Object> search(
+            String str )
+    {
+        List<Object> resultList = new ArrayList<Object>();
+        for( String name : searchableStr )
+        {
+            if( name.toLowerCase().contains( str.toLowerCase() ) )
+            {
+                resultList.add( mSearchResultInfoList.get( searchableStr.indexOf( name ) ) );
+            }
+        }
+        return resultList;
+    }
+
+    /**
+     * Load the contact photo
+     *
+     * @param contactId
+     * @return
+     */
+    private InputStream openPhoto(
+            long contactId )
+    {
+        Uri contactUri = ContentUris.withAppendedId( Contacts.CONTENT_URI , contactId );
+        Uri photoUri = Uri.withAppendedPath( contactUri , Contacts.Photo.CONTENT_DIRECTORY );
+        Cursor cursor = SearchService.mContext.getContentResolver().query( photoUri , new String[]{ Contacts.Photo.PHOTO } , null , null , null );
+        if( cursor == null )
+        {
+            return null;
+        }
+        try
+        {
+            if( cursor.moveToFirst() )
+            {
+                byte[] data = cursor.getBlob( 0 );
+                if( data != null )
+                {
+                    return new ByteArrayInputStream( data );
+                }
+            }
+        }
+        finally
+        {
+            cursor.close();
+        }
+        return null;
+    }
 }
