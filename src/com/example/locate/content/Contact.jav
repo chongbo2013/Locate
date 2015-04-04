@@ -28,7 +28,6 @@ public class Contact implements Searchable
 {
 
     private static Contact mContact;
-    private List<ContactInfo> mContactList = new ArrayList<ContactInfo>();
     private List<SearchResultInfo> mSearchResultInfoList = new ArrayList<SearchResultInfo>();
     private List<String> searchableStr = new ArrayList<String>();
 
@@ -50,7 +49,6 @@ public class Contact implements Searchable
                         String phoneNo = pCur.getString( pCur.getColumnIndex( ContactsContract.CommonDataKinds.Phone.NUMBER ) );
                         InputStream is = openPhoto( Long.valueOf( id ) );
                         Bitmap photo = BitmapFactory.decodeStream( is );
-                        mContactList.add( new ContactInfo( Long.valueOf( id ) , name , phoneNo , photo ) );
                         // when clicked get into the detail information of the contact
                         Intent intent = new Intent( Intent.ACTION_VIEW );
                         Uri uri = Uri.withAppendedPath( ContactsContract.Contacts.CONTENT_URI , String.valueOf( Long.valueOf(id) ) );
@@ -61,9 +59,9 @@ public class Contact implements Searchable
                 }
             }
         }
-        for( ContactInfo info : mContactList )
+        for( SearchResultInfo info : mSearchResultInfoList )
         {
-            String name = info.getName();
+            String name = info.getTitle();
             String pinyin = Utils.chinese2pinyin( name );
             String pinyin_short = Utils.getFirstLetter( pinyin );
             String searchable_name = name + pinyin + pinyin_short;

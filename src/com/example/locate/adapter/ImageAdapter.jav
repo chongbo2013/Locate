@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.locate.R;
-import com.example.locate.content.ContactInfo;
 import com.example.locate.content.SearchResultInfo;
 
 
