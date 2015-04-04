@@ -81,10 +81,10 @@ public class Contact implements Searchable
     }
 
     @Override
-    public List<Object> search(
+    public List<SearchResultInfo> search(
             String str )
     {
-        List<Object> resultList = new ArrayList<Object>();
+        List<SearchResultInfo> resultList = new ArrayList<SearchResultInfo>();
         for( String name : searchableStr )
         {
             if( name.toLowerCase().contains( str.toLowerCase() ) )

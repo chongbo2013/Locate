@@ -55,10 +55,10 @@ public class Application implements Searchable
     }
 
     @Override
-    public List<Object> search(
+    public List<SearchResultInfo> search(
             String str )
     {
-        List<Object> appInfo = new ArrayList<Object>();
+        List<SearchResultInfo> appInfo = new ArrayList<SearchResultInfo>();
         for( String name : searchableStr )
         {
             if( name.toLowerCase().contains( str.toLowerCase() ) )
