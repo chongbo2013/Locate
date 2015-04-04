@@ -1,5 +1,5 @@
 # Locate
-It has never been so fast to search Chinese content on Android.
+Searching Chinese content on Android has never been so fast.
 
 ### Dependency
 * [pinyin4j](http://pinyin4j.sourceforge.net)
