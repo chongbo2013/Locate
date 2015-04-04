@@ -1,11 +1,6 @@
 package com.example.locate.content;
 
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Intent;
@@ -19,6 +14,11 @@ import android.provider.ContactsContract.Contacts;
 
 import com.example.locate.service.SearchService;
 import com.example.locate.tools.Utils;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -48,12 +48,16 @@ public class Contact implements Searchable
                     {
                         String phoneNo = pCur.getString( pCur.getColumnIndex( ContactsContract.CommonDataKinds.Phone.NUMBER ) );
                         InputStream is = openPhoto( Long.valueOf( id ) );
+
                         Bitmap photo = BitmapFactory.decodeStream( is );
                         // when clicked get into the detail information of the contact
                         Intent intent = new Intent( Intent.ACTION_VIEW );
                         Uri uri = Uri.withAppendedPath( ContactsContract.Contacts.CONTENT_URI , String.valueOf( Long.valueOf(id) ) );
                         intent.setData( uri );
-                        mSearchResultInfoList.add(new SearchResultInfo(name, new BitmapDrawable(SearchService.mContext.getResources(),photo), intent));
+                        if ( is != null )
+                            mSearchResultInfoList.add(new SearchResultInfo(name, new BitmapDrawable(SearchService.mContext.getResources(),photo), intent));
+                        else
+                            mSearchResultInfoList.add(new SearchResultInfo(name, null, intent));
                     }
                     pCur.close();
                 }
