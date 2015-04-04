@@ -1,13 +1,11 @@
 package com.example.locate.adapter;
 
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +18,8 @@ import android.widget.TextView;
 
 import com.example.locate.R;
 import com.example.locate.content.SearchResultInfo;
+
+import java.util.List;
 
 
 public class ImageAdapter extends BaseAdapter
@@ -123,9 +123,9 @@ public class ImageAdapter extends BaseAdapter
                 // Add The Image!!!
                 ImageView iv = (ImageView)myView.findViewById( R.id.grid_item_image );
                 // Only set the photo when not empty otherwise use default contact photo
-                Bitmap photo = contactInfo.getIcon().getBitmap();
+                Drawable photo = contactInfo.getIcon();
                 if( photo != null )
-                    iv.setImageBitmap( photo );
+                    iv.setImageDrawable( photo );
                 // Add The Text!!!
                 TextView tv = (TextView)myView.findViewById( R.id.grid_item_text );
                 tv.setText( contactInfo.getTitle() );

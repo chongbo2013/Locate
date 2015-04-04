@@ -1,24 +1,24 @@
 package com.example.locate.content;
 
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 
 /**
  * A single search result information
  */
 public class SearchResultInfo {
     private String title;
-    private BitmapDrawable icon;
+    private Drawable icon;
     private Intent click;
     private Intent longClick;
 
-    public SearchResultInfo(String title, BitmapDrawable icon, Intent click){
+    public SearchResultInfo(String title, Drawable icon, Intent click){
         this.title = title;
         this.icon = icon;
         this.click = click;
     }
 
-    public SearchResultInfo(String title, BitmapDrawable icon, Intent click, Intent longClick){
+    public SearchResultInfo(String title, Drawable icon, Intent click, Intent longClick){
         this(title, icon, click);
         this.longClick = longClick;
     }
@@ -27,7 +27,7 @@ public class SearchResultInfo {
         return title;
     }
 
-    public BitmapDrawable getIcon() {
+    public Drawable getIcon() {
         return icon;
     }
 
