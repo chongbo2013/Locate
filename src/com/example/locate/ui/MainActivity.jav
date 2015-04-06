@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,6 +35,7 @@ public class MainActivity extends Activity
     private ImageButton mImageButton;
     private TextView mTextView;
     private LinearLayout searchResult;
+    private ImageView searchResultBg;
     private List<SearchResultInfo> resultList;
     private TextWatcher mTextWatcher = new TextWatcher() {
 
@@ -57,8 +59,8 @@ public class MainActivity extends Activity
                 int arg3 )
         {
             // We are searching, hide the background
-            if( searchResult.getBackground() != null )
-                searchResult.setBackground( null );
+            if( searchResultBg.getBackground() != null )
+                searchResultBg.setBackground( null );
             // TODO Auto-generated method stub
             seconds_be = System.currentTimeMillis();
         }
@@ -92,7 +94,7 @@ public class MainActivity extends Activity
         mTextView = (TextView)findViewById( R.id.textView_statistics );
         mGridView = (GridView)findViewById( R.id.gridView );
         searchResult = (LinearLayout)findViewById( R.id.searchResult );
-        searchResult.setBackgroundResource( R.mipmap.contact );
+        searchResultBg = (ImageView)findViewById(R.id.search_result_bg);
         mEditText = (EditText)findViewById( R.id.editText );
         mEditText.addTextChangedListener( mTextWatcher );
     }
@@ -119,7 +121,7 @@ public class MainActivity extends Activity
         mEditText.setText( "" );
         mTextView.setText( "" );
         mGridView.setAdapter( null );
-        searchResult.setBackgroundResource( R.mipmap.contact );
+        searchResultBg.setBackgroundResource( R.mipmap.search_result_bg );
         // set the text watcher after clear the search content
         mEditText.addTextChangedListener( mTextWatcher );
     }
