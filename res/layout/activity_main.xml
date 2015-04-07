@@ -31,7 +31,9 @@
             android:gravity="center|start"
             android:hint="@string/content"
             android:imeOptions="actionSearch"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColorHint="#CCCCCC"
+            android:textSize="16sp" />
 
         <ImageButton
             android:id="@+id/imageButton2"
