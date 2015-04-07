@@ -4,18 +4,22 @@ package com.example.locate.ui;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.example.locate.Locate;
 import com.example.locate.R;
@@ -78,6 +82,23 @@ public class MainActivity extends Activity
 			mGridView.setAdapter( new ImageAdapter( mContext , resultList ) );
 		}
 	};
+	private OnEditorActionListener mOnEditorActionListener = new OnEditorActionListener() {
+		
+		@Override
+		public boolean onEditorAction(
+				TextView v ,
+				int actionId ,
+				KeyEvent event )
+		{
+			boolean handled = false;
+			if( actionId == EditorInfo.IME_ACTION_SEARCH )
+			{
+				webSearch();
+				handled = true;
+			}
+			return handled;
+		}
+	};
 	
 	@Override
 	protected void onCreate(
@@ -94,12 +115,14 @@ public class MainActivity extends Activity
 		searchResultBg = (ImageView)findViewById( R.id.search_result_bg );
 		mEditText = (EditText)findViewById( R.id.editText );
 		mEditText.addTextChangedListener( mTextWatcher );
+		mEditText.setOnEditorActionListener( mOnEditorActionListener );
 	}
 	
 	@Override
 	protected void onPause()
 	{
 		super.onPause();
+		// hide the keyboard before start a new activity
 		InputMethodManager inputMethodManager = (InputMethodManager)getSystemService( Activity.INPUT_METHOD_SERVICE );
 		inputMethodManager.hideSoftInputFromWindow( getCurrentFocus().getWindowToken() , 0 );
 	}
@@ -121,5 +144,15 @@ public class MainActivity extends Activity
 		searchResultBg.setBackgroundResource( R.mipmap.search_result_bg );
 		// set the text watcher after clear the search content
 		mEditText.addTextChangedListener( mTextWatcher );
+	}
+	
+	/**
+	 * Perform a web search
+	 */
+	private void webSearch()
+	{
+		Intent intent = new Intent( Intent.ACTION_WEB_SEARCH );
+		intent.putExtra( SearchManager.QUERY , mEditText.getText().toString() );
+		startActivity( intent );
 	}
 }
