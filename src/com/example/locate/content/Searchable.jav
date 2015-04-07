@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface Searchable
 {
-
-    List<SearchResultInfo> search(
-            String str );
+	
+	List<SearchResultInfo> search(
+			String str );
 }
