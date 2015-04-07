@@ -30,6 +30,9 @@ public class SearchFactory
 			case CONTACT:
 				s = Contact.getInstance();
 				break;
+			case WEB:
+				s = Web.getInstance();
+				break;
 		}
 		return s;
 	}
