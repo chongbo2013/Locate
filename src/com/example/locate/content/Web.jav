@@ -6,6 +6,10 @@ import java.util.List;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+
+import com.example.locate.R;
+import com.example.locate.service.SearchService;
 
 
 /**
@@ -33,9 +37,10 @@ public class Web implements Searchable
 	{
 		List<SearchResultInfo> appInfo = new ArrayList<SearchResultInfo>();
 		String title = "Internet";
+		Drawable icon = SearchService.mContext.getResources().getDrawable( R.mipmap.internet );
 		Intent click = new Intent( Intent.ACTION_WEB_SEARCH );
 		click.putExtra( SearchManager.QUERY , str );
-		appInfo.add( new SearchResultInfo( title , null , click ) );
+		appInfo.add( new SearchResultInfo( title , icon , click ) );
 		return appInfo;
 	}
 }
