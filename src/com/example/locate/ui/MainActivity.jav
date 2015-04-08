@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,12 +22,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.example.locate.Locate;
 import com.example.locate.R;
 import com.example.locate.adapter.ImageAdapter;
 import com.example.locate.content.SearchResultInfo;
 import com.example.locate.service.SearchService;
+import com.example.locate.task.DownloadTask;
 
 
 public class MainActivity extends Activity
@@ -116,6 +120,7 @@ public class MainActivity extends Activity
 		mEditText = (EditText)findViewById( R.id.editText );
 		mEditText.addTextChangedListener( mTextWatcher );
 		mEditText.setOnEditorActionListener( mOnEditorActionListener );
+		checkUpdate();
 	}
 	
 	@Override
@@ -154,5 +159,22 @@ public class MainActivity extends Activity
 		Intent intent = new Intent( Intent.ACTION_WEB_SEARCH );
 		intent.putExtra( SearchManager.QUERY , mEditText.getText().toString() );
 		startActivity( intent );
+	}
+	
+	/**
+	 * Check whether there is new version released
+	 */
+	private void checkUpdate()
+	{
+		ConnectivityManager connMgr = (ConnectivityManager)getSystemService( Context.CONNECTIVITY_SERVICE );
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if( networkInfo != null && networkInfo.isConnected() )
+		{
+			new DownloadTask().execute( "http://movier.me:3000/" );
+		}
+		else
+		{
+			Toast.makeText( mContext , "Internet not accessible!" , Toast.LENGTH_SHORT ).show();
+		}
 	}
 }
