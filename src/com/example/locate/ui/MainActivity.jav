@@ -4,11 +4,13 @@ package com.example.locate.ui;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -171,10 +173,30 @@ public class MainActivity extends Activity
 		if( networkInfo != null && networkInfo.isConnected() )
 		{
 			new DownloadTask().execute( "http://movier.me:3000/" );
+			showDialog();
 		}
 		else
 		{
 			Toast.makeText( mContext , "Internet not accessible!" , Toast.LENGTH_SHORT ).show();
 		}
+	}
+	
+	/**
+	 * We found the new version so tell the user to update
+	 */
+	public void showDialog()
+	{
+		DialogFragment newFragment = new UpdateDialog();
+		newFragment.show( getFragmentManager() , "dialog" );
+	}
+	
+	/**
+	 * User choose to do the update
+	 */
+	public void doPositiveClick()
+	{
+		Uri uri = Uri.parse( "http://movier.me:3000/download/Search-v0.3.0.apk" );
+		Intent browserIntent = new Intent( Intent.ACTION_VIEW , uri );
+		startActivity( browserIntent );
 	}
 }
