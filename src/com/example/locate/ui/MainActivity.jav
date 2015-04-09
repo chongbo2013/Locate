@@ -31,13 +31,14 @@ import com.example.locate.R;
 import com.example.locate.adapter.ImageAdapter;
 import com.example.locate.content.SearchResultInfo;
 import com.example.locate.service.SearchService;
-import com.example.locate.task.DownloadTask;
+import com.example.locate.task.CheckUpdateTask;
 
 
 public class MainActivity extends Activity
 {
 	
 	public static final String TAG = "MainActivity";
+	public String url = "";
 	private Context mContext;
 	private GridView mGridView;
 	private EditText mEditText;
@@ -172,8 +173,7 @@ public class MainActivity extends Activity
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if( networkInfo != null && networkInfo.isConnected() )
 		{
-			new DownloadTask().execute( "http://movier.me:3000/" );
-			showDialog();
+			new CheckUpdateTask( this ).execute( "http://movier.me:3000/" );
 		}
 		else
 		{
@@ -184,7 +184,7 @@ public class MainActivity extends Activity
 	/**
 	 * We found the new version so tell the user to update
 	 */
-	public void showDialog()
+	public void showUpdateDialog()
 	{
 		DialogFragment newFragment = new UpdateDialog();
 		newFragment.show( getFragmentManager() , "dialog" );
@@ -195,7 +195,7 @@ public class MainActivity extends Activity
 	 */
 	public void doPositiveClick()
 	{
-		Uri uri = Uri.parse( "http://movier.me:3000/download/Search-v0.3.0.apk" );
+		Uri uri = Uri.parse( url );
 		Intent browserIntent = new Intent( Intent.ACTION_VIEW , uri );
 		startActivity( browserIntent );
 	}

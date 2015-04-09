@@ -9,28 +9,52 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.example.locate.service.SearchService;
+import com.example.locate.ui.MainActivity;
 
 
-public class DownloadTask extends AsyncTask<String , Void , String>
+public class CheckUpdateTask extends AsyncTask<String , Void , String>
 {
+	
+	private Activity activity;
+	
+	public CheckUpdateTask(
+			Activity activity )
+	{
+		this.activity = activity;
+	}
 	
 	@Override
 	protected String doInBackground(
 			String ... urls )
 	{
-		// params comes from the execute() call: params[0] is the url.
 		try
 		{
-			return downloadUrl( urls[0] );
+			String result = downloadUrl( urls[0] );
+			JSONObject jObject = new JSONObject( result );
+			int version = jObject.getInt( "version" );
+			PackageManager pm = SearchService.mContext.getPackageManager();
+			PackageInfo pi = pm.getPackageInfo( SearchService.mContext.getPackageName() , 0 );
+			int versioncode = pi.versionCode;
+			String url = "";
+			if( version > versioncode )
+			{
+				url = jObject.getString( "url" );
+			}
+			return url;
 		}
-		catch( IOException e )
+		catch( IOException | JSONException | NameNotFoundException e )
 		{
-			return "Unable to retrieve web page. URL may be invalid.";
+			return "";
 		}
 	}
 	
@@ -39,7 +63,13 @@ public class DownloadTask extends AsyncTask<String , Void , String>
 	protected void onPostExecute(
 			String result )
 	{
-		Toast.makeText( SearchService.mContext , result , Toast.LENGTH_SHORT ).show();
+		// Result is not empty indicates that we got a new version
+		if( !result.isEmpty() )
+		{
+			MainActivity main = (MainActivity)activity;
+			main.url = result;
+			main.showUpdateDialog();
+		}
 	}
 	
 	// Given a URL, establishes an HttpUrlConnection and retrieves
@@ -62,8 +92,6 @@ public class DownloadTask extends AsyncTask<String , Void , String>
 			conn.setDoInput( true );
 			// Starts the query
 			conn.connect();
-			int response = conn.getResponseCode();
-			Log.d( "yangxiaoming" , "The response is: " + response );
 			is = conn.getInputStream();
 			// Convert the InputStream into a string
 			String contentAsString = readIt( is , len );
