@@ -5,4 +5,7 @@
     <string name="pref_contact">contact</string>
     <string name="pref_web">web</string>
     <string name="pref_search_range">Search Range</string>
+    <string name="pref_debug">Debug</string>
+    <string name="pref_others">Others</string>
+    <string name="action_settings">Settings</string>
 </resources>
