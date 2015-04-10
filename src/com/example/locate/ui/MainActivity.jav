@@ -124,6 +124,7 @@ public class MainActivity extends Activity
 		mContext = this;
 		mImageButton = (ImageButton)findViewById( R.id.imageButton2 );
 		mTextView = (TextView)findViewById( R.id.textView_statistics );
+		mTextView.setVisibility( View.GONE );
 		mGridView = (GridView)findViewById( R.id.gridView );
 		searchResultBg = (ImageView)findViewById( R.id.search_result_bg );
 		mEditText = (EditText)findViewById( R.id.editText );
@@ -154,6 +155,7 @@ public class MainActivity extends Activity
 		mImageButton.setVisibility( View.GONE );
 		mEditText.setText( "" );
 		mTextView.setText( "" );
+		mTextView.setVisibility( View.GONE );
 		mGridView.setAdapter( null );
 		searchResultBg.setBackgroundResource( R.mipmap.search_result_bg );
 		// set the text watcher after clear the search content
