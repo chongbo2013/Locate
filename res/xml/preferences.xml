@@ -19,5 +19,16 @@
             android:title="@string/pref_web" />
         
     </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:key="pref_others"
+        android:title="@string/pref_others" >
+        
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_debug"
+            android:title="@string/pref_debug" />
+        
+    </PreferenceCategory>
 
 </PreferenceScreen>

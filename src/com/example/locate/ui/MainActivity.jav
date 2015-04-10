@@ -8,10 +8,12 @@ import android.app.DialogFragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -58,6 +60,10 @@ public class MainActivity extends Activity
 			seconds_af = System.currentTimeMillis();
 			int resultNum = resultList.size();
 			mTextView.setText( "总计：" + resultNum + " 个。耗时：" + String.valueOf( seconds_af - seconds_be ) + " 毫秒。" );
+			SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences( mContext );
+			boolean debugMode = sharedPref.getBoolean( "pref_debug" , false );
+			int visibility = debugMode ? View.VISIBLE : View.GONE;
+			mTextView.setVisibility( visibility );
 		}
 		
 		@Override
