@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.example.locate.content.SearchFactory;
 import com.example.locate.content.SearchResultInfo;
@@ -62,9 +64,17 @@ public class Locate
 	 */
 	private List<Range> range()
 	{
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences( mContext );
+		boolean showApp = sharedPref.getBoolean( "pref_app" , true );
+		boolean showContact = sharedPref.getBoolean( "pref_contact" , true );
+		boolean showWeb = sharedPref.getBoolean( "pref_web" , true );
 		List<Range> list = new ArrayList<Range>();
-		for( Range r : Range.values() )
-			list.add( r );
+		if( showApp )
+			list.add( Range.APP );
+		if( showContact )
+			list.add( Range.CONTACT );
+		if( showWeb )
+			list.add( Range.WEB );
 		return list;
 	}
 }
