@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Locate</string>
-    <string name="content">Please Enter Keyword</string>
+    <string name="content">App, Contact, Web</string>
+    <string name="pref_app">app</string>
+    <string name="pref_contact">contact</string>
+    <string name="pref_web">web</string>
+    <string name="pref_search_range">Search Range</string>
 </resources>

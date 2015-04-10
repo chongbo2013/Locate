@@ -199,4 +199,11 @@ public class MainActivity extends Activity
 		Intent browserIntent = new Intent( Intent.ACTION_VIEW , uri );
 		startActivity( browserIntent );
 	}
+	
+	public void showSettingActivity(
+			View view )
+	{
+		Intent intent = new Intent( this , SettingsActivity.class );
+		startActivity( intent );
+	}
 }
