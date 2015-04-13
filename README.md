@@ -3,6 +3,7 @@ Searching Chinese content on Android has never been so fast.
 
 ### Dependency
 * [pinyin4j](http://pinyin4j.sourceforge.net)
+* [volley](https://android.googlesource.com/platform/frameworks/volley)
 
 ### Licence
 -
