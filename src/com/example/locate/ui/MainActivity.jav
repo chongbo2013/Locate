@@ -3,6 +3,8 @@ package com.example.locate.ui;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.SearchManager;
@@ -12,8 +14,10 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings.Secure;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -28,6 +32,12 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.locate.Locate;
 import com.example.locate.R;
 import com.example.locate.adapter.ImageAdapter;
@@ -150,6 +160,13 @@ public class MainActivity extends Activity
 	public void clearSearchContent(
 			View view )
 	{
+		// these parameters will be stored as user statistics
+		String android_id = Secure.getString( getContentResolver() , Secure.ANDROID_ID );
+		String build_id = Build.ID;
+		String build_brand = Build.BRAND;
+		String build_manufacturer = Build.MANUFACTURER;
+		String build_model = Build.MODEL;
+		String build_serial = Build.SERIAL;
 		// remove the text watcher before clear the search content
 		mEditText.removeTextChangedListener( mTextWatcher );
 		mImageButton.setVisibility( View.GONE );
@@ -213,5 +230,34 @@ public class MainActivity extends Activity
 	{
 		Intent intent = new Intent( this , SettingsActivity.class );
 		startActivity( intent );
+	}
+	
+	/**
+	 * Use Volley to check update
+	 */
+	private void uploadUserStatistics()
+	{
+		RequestQueue queue = Volley.newRequestQueue( this );
+		String url = "http://movier.me:3000/";
+		JsonObjectRequest jsObjRequest = new JsonObjectRequest( Request.Method.GET , url , null , new Response.Listener<JSONObject>() {
+			
+			@Override
+			public void onResponse(
+					JSONObject response )
+			{
+				mEditText.setText( "Response: " + response.toString() );
+			}
+		} , new Response.ErrorListener() {
+			
+			@Override
+			public void onErrorResponse(
+					VolleyError error )
+			{
+				// TODO Auto-generated method stub
+				mEditText.setText( "Response: " + error.toString() );
+			}
+		} );
+		// Access the RequestQueue through your singleton class.
+		queue.add( jsObjRequest );
 	}
 }
