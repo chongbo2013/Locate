@@ -1,7 +1,9 @@
 package com.example.locate.ui;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -37,6 +39,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.locate.Locate;
 import com.example.locate.R;
@@ -160,13 +163,6 @@ public class MainActivity extends Activity
 	public void clearSearchContent(
 			View view )
 	{
-		// these parameters will be stored as user statistics
-		String android_id = Secure.getString( getContentResolver() , Secure.ANDROID_ID );
-		String build_id = Build.ID;
-		String build_brand = Build.BRAND;
-		String build_manufacturer = Build.MANUFACTURER;
-		String build_model = Build.MODEL;
-		String build_serial = Build.SERIAL;
 		// remove the text watcher before clear the search content
 		mEditText.removeTextChangedListener( mTextWatcher );
 		mImageButton.setVisibility( View.GONE );
@@ -235,7 +231,7 @@ public class MainActivity extends Activity
 	/**
 	 * Use Volley to check update
 	 */
-	private void uploadUserStatistics()
+	private void checkForUpdate()
 	{
 		RequestQueue queue = Volley.newRequestQueue( this );
 		String url = "http://movier.me:3000/";
@@ -259,5 +255,54 @@ public class MainActivity extends Activity
 		} );
 		// Access the RequestQueue through your singleton class.
 		queue.add( jsObjRequest );
+	}
+	
+	/**
+	 * Use volley to upload some information about the user
+	 */
+	private void uploadUserInfo()
+	{
+		// these parameters will be stored as user statistics
+		final String android_id = Secure.getString( getContentResolver() , Secure.ANDROID_ID );
+		String build_id = Build.ID;
+		final String build_brand = Build.BRAND;
+		String build_manufacturer = Build.MANUFACTURER;
+		String build_model = Build.MODEL;
+		String build_serial = Build.SERIAL;
+		// Instantiate the RequestQueue.
+		RequestQueue queue = Volley.newRequestQueue( this );
+		String url = "http://movier.me:3000/user/3";
+		// Request a string response from the provided URL.
+		StringRequest stringRequest = new StringRequest( Request.Method.POST , url , new Response.Listener<String>() {
+			
+			@Override
+			public void onResponse(
+					String response )
+			{
+				// Display the first 500 characters of the response string.
+				mEditText.setText( "Response is: " + response );
+			}
+		} , new Response.ErrorListener() {
+			
+			@Override
+			public void onErrorResponse(
+					VolleyError error )
+			{
+				mEditText.setText( "That didn't work!" );
+			}
+		} ) {
+			
+			@Override
+			protected Map<String , String> getParams()
+			{
+				// set post fields here
+				Map<String , String> map = new HashMap<String , String>();
+				map.put( "android_id" , android_id );
+				map.put( "build_brand" , build_brand );
+				return map;
+			}
+		};
+		// Add the request to the RequestQueue.
+		queue.add( stringRequest );
 	}
 }
