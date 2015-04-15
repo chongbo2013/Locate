@@ -271,7 +271,7 @@ public class MainActivity extends Activity
 		String build_serial = Build.SERIAL;
 		// Instantiate the RequestQueue.
 		RequestQueue queue = Volley.newRequestQueue( this );
-		String url = "http://movier.me:3000/user/3";
+		String url = "http://movier.me:3000/add";
 		// Request a string response from the provided URL.
 		StringRequest stringRequest = new StringRequest( Request.Method.POST , url , new Response.Listener<String>() {
 			
@@ -281,6 +281,12 @@ public class MainActivity extends Activity
 			{
 				// Display the first 500 characters of the response string.
 				mEditText.setText( "Response is: " + response );
+				// Get a handle to a SharedPreferences
+				SharedPreferences sharedPref = getPreferences( Context.MODE_PRIVATE );
+				// Write to Shared Preferences
+				SharedPreferences.Editor editor = sharedPref.edit();
+				editor.putString( "id" , response );
+				editor.apply();
 			}
 		} , new Response.ErrorListener() {
 			
