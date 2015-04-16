@@ -45,8 +45,9 @@ import com.example.locate.Locate;
 import com.example.locate.R;
 import com.example.locate.adapter.ImageAdapter;
 import com.example.locate.content.SearchResultInfo;
+import com.example.locate.network.CheckUpdateTask;
+import com.example.locate.network.LocateRequestQueue;
 import com.example.locate.service.SearchService;
-import com.example.locate.task.CheckUpdateTask;
 
 
 public class MainActivity extends Activity
@@ -270,7 +271,7 @@ public class MainActivity extends Activity
 		String build_model = Build.MODEL;
 		String build_serial = Build.SERIAL;
 		// Instantiate the RequestQueue.
-		RequestQueue queue = Volley.newRequestQueue( this );
+		RequestQueue queue = LocateRequestQueue.getInstance( this.getApplicationContext() ).getRequestQueue();
 		String url = "http://movier.me:3000/add";
 		// Request a string response from the provided URL.
 		StringRequest stringRequest = new StringRequest( Request.Method.POST , url , new Response.Listener<String>() {
