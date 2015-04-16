@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -13,8 +14,9 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,7 +34,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -40,12 +41,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.locate.Locate;
 import com.example.locate.R;
 import com.example.locate.adapter.ImageAdapter;
 import com.example.locate.content.SearchResultInfo;
-import com.example.locate.network.CheckUpdateTask;
 import com.example.locate.network.LocateRequestQueue;
 import com.example.locate.service.SearchService;
 
@@ -54,7 +53,7 @@ public class MainActivity extends Activity
 {
 	
 	public static final String TAG = "MainActivity";
-	public String url = "";
+	public String downloadUrl = "";
 	private Context mContext;
 	private GridView mGridView;
 	private EditText mEditText;
@@ -144,7 +143,8 @@ public class MainActivity extends Activity
 		mEditText = (EditText)findViewById( R.id.editText );
 		mEditText.addTextChangedListener( mTextWatcher );
 		mEditText.setOnEditorActionListener( mOnEditorActionListener );
-		checkUpdate();
+		checkForUpdate();
+		// uploadUserInfo();
 	}
 	
 	@Override
@@ -187,23 +187,6 @@ public class MainActivity extends Activity
 	}
 	
 	/**
-	 * Check whether there is new version released
-	 */
-	private void checkUpdate()
-	{
-		ConnectivityManager connMgr = (ConnectivityManager)getSystemService( Context.CONNECTIVITY_SERVICE );
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if( networkInfo != null && networkInfo.isConnected() )
-		{
-			new CheckUpdateTask( this ).execute( "http://movier.me:3000/" );
-		}
-		else
-		{
-			Toast.makeText( mContext , "Internet not accessible!" , Toast.LENGTH_SHORT ).show();
-		}
-	}
-	
-	/**
 	 * We found the new version so tell the user to update
 	 */
 	public void showUpdateDialog()
@@ -217,7 +200,7 @@ public class MainActivity extends Activity
 	 */
 	public void doPositiveClick()
 	{
-		Uri uri = Uri.parse( url );
+		Uri uri = Uri.parse( downloadUrl );
 		Intent browserIntent = new Intent( Intent.ACTION_VIEW , uri );
 		startActivity( browserIntent );
 	}
@@ -234,7 +217,7 @@ public class MainActivity extends Activity
 	 */
 	private void checkForUpdate()
 	{
-		RequestQueue queue = Volley.newRequestQueue( this );
+		RequestQueue queue = LocateRequestQueue.getInstance( this.getApplicationContext() ).getRequestQueue();
 		String url = "http://movier.me:3000/";
 		JsonObjectRequest jsObjRequest = new JsonObjectRequest( Request.Method.GET , url , null , new Response.Listener<JSONObject>() {
 			
@@ -242,7 +225,23 @@ public class MainActivity extends Activity
 			public void onResponse(
 					JSONObject response )
 			{
-				mEditText.setText( "Response: " + response.toString() );
+				try
+				{
+					int version = response.getInt( "version" );
+					PackageManager pm = SearchService.mContext.getPackageManager();
+					PackageInfo pi = pm.getPackageInfo( SearchService.mContext.getPackageName() , 0 );
+					int versioncode = pi.versionCode;
+					if( version > versioncode )
+					{
+						downloadUrl = response.getString( "url" );
+						showUpdateDialog();
+					}
+					mEditText.setText( "Response: " + downloadUrl );
+				}
+				catch( JSONException | NameNotFoundException e )
+				{
+					mEditText.setText( "SomeThing wrong" );
+				}
 			}
 		} , new Response.ErrorListener() {
 			
@@ -295,7 +294,7 @@ public class MainActivity extends Activity
 			public void onErrorResponse(
 					VolleyError error )
 			{
-				mEditText.setText( "That didn't work!" );
+				mEditText.setText( "error" );
 			}
 		} ) {
 			
