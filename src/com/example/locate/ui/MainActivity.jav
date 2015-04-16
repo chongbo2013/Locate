@@ -1,12 +1,7 @@
 package com.example.locate.ui;
 
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -14,14 +9,9 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.Settings.Secure;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -35,17 +25,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.example.locate.Locate;
 import com.example.locate.R;
 import com.example.locate.adapter.ImageAdapter;
 import com.example.locate.content.SearchResultInfo;
-import com.example.locate.network.LocateRequestQueue;
+import com.example.locate.network.CommonRequest;
 import com.example.locate.service.SearchService;
 
 
@@ -143,8 +127,10 @@ public class MainActivity extends Activity
 		mEditText = (EditText)findViewById( R.id.editText );
 		mEditText.addTextChangedListener( mTextWatcher );
 		mEditText.setOnEditorActionListener( mOnEditorActionListener );
-		checkForUpdate();
-		// uploadUserInfo();
+		// checkForUpdate();
+		CommonRequest.getInstance( mContext );
+		CommonRequest.checkForUpdate();
+		CommonRequest.uploadUserInfo();
 	}
 	
 	@Override
@@ -210,105 +196,5 @@ public class MainActivity extends Activity
 	{
 		Intent intent = new Intent( this , SettingsActivity.class );
 		startActivity( intent );
-	}
-	
-	/**
-	 * Use Volley to check update
-	 */
-	private void checkForUpdate()
-	{
-		RequestQueue queue = LocateRequestQueue.getInstance( this.getApplicationContext() ).getRequestQueue();
-		String url = "http://movier.me:3000/";
-		JsonObjectRequest jsObjRequest = new JsonObjectRequest( Request.Method.GET , url , null , new Response.Listener<JSONObject>() {
-			
-			@Override
-			public void onResponse(
-					JSONObject response )
-			{
-				try
-				{
-					int version = response.getInt( "version" );
-					PackageManager pm = SearchService.mContext.getPackageManager();
-					PackageInfo pi = pm.getPackageInfo( SearchService.mContext.getPackageName() , 0 );
-					int versioncode = pi.versionCode;
-					if( version > versioncode )
-					{
-						downloadUrl = response.getString( "url" );
-						showUpdateDialog();
-					}
-					mEditText.setText( "Response: " + downloadUrl );
-				}
-				catch( JSONException | NameNotFoundException e )
-				{
-					mEditText.setText( "SomeThing wrong" );
-				}
-			}
-		} , new Response.ErrorListener() {
-			
-			@Override
-			public void onErrorResponse(
-					VolleyError error )
-			{
-				// TODO Auto-generated method stub
-				mEditText.setText( "Response: " + error.toString() );
-			}
-		} );
-		// Access the RequestQueue through your singleton class.
-		queue.add( jsObjRequest );
-	}
-	
-	/**
-	 * Use volley to upload some information about the user
-	 */
-	private void uploadUserInfo()
-	{
-		// these parameters will be stored as user statistics
-		final String android_id = Secure.getString( getContentResolver() , Secure.ANDROID_ID );
-		String build_id = Build.ID;
-		final String build_brand = Build.BRAND;
-		String build_manufacturer = Build.MANUFACTURER;
-		String build_model = Build.MODEL;
-		String build_serial = Build.SERIAL;
-		// Instantiate the RequestQueue.
-		RequestQueue queue = LocateRequestQueue.getInstance( this.getApplicationContext() ).getRequestQueue();
-		String url = "http://movier.me:3000/add";
-		// Request a string response from the provided URL.
-		StringRequest stringRequest = new StringRequest( Request.Method.POST , url , new Response.Listener<String>() {
-			
-			@Override
-			public void onResponse(
-					String response )
-			{
-				// Display the first 500 characters of the response string.
-				mEditText.setText( "Response is: " + response );
-				// Get a handle to a SharedPreferences
-				SharedPreferences sharedPref = getPreferences( Context.MODE_PRIVATE );
-				// Write to Shared Preferences
-				SharedPreferences.Editor editor = sharedPref.edit();
-				editor.putString( "id" , response );
-				editor.apply();
-			}
-		} , new Response.ErrorListener() {
-			
-			@Override
-			public void onErrorResponse(
-					VolleyError error )
-			{
-				mEditText.setText( "error" );
-			}
-		} ) {
-			
-			@Override
-			protected Map<String , String> getParams()
-			{
-				// set post fields here
-				Map<String , String> map = new HashMap<String , String>();
-				map.put( "android_id" , android_id );
-				map.put( "build_brand" , build_brand );
-				return map;
-			}
-		};
-		// Add the request to the RequestQueue.
-		queue.add( stringRequest );
 	}
 }
