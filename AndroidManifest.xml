@@ -29,9 +29,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity 
+            android:name=".ui.SettingsActivity" 
+            android:label="@string/action_settings"
+            android:parentActivityName=".ui.MainActivity" />
         
         <service android:name=".service.SearchService" />
-        <activity android:name=".ui.SettingsActivity"></activity>
         
     </application>
 
