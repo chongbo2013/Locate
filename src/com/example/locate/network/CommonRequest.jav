@@ -156,7 +156,7 @@ public class CommonRequest
 		final String id = sharedPref.getString( "id" , "" );
 		if( !id.isEmpty() )
 		{
-			String url = "http://movier.me:3000/locate/user/action";
+			String url = "http://movier.me:3000/action";
 			StringRequest stringRequest = new StringRequest( Request.Method.POST , url , new Response.Listener<String>() {
 				
 				@Override
@@ -187,6 +187,10 @@ public class CommonRequest
 			};
 			// Add the request to the RequestQueue.
 			mRequestQueue.add( stringRequest );
+		}
+		else
+		{
+			uploadUserInfo();
 		}
 	}
 }
