@@ -56,7 +56,7 @@ public class CommonRequest
 	public static void checkForUpdate()
 	{
 		String url = "http://movier.me:3000/";
-		JsonObjectRequest jsObjRequest = new JsonObjectRequest( Request.Method.GET , url , null , new Response.Listener<JSONObject>() {
+		JsonObjectRequest jsObjRequest = new JsonObjectRequest( url , null , new Response.Listener<JSONObject>() {
 			
 			@Override
 			public void onResponse(
@@ -64,16 +64,16 @@ public class CommonRequest
 			{
 				try
 				{
-					int version = response.getInt( "version" );
-					PackageManager pm = SearchService.mContext.getPackageManager();
-					PackageInfo pi = pm.getPackageInfo( SearchService.mContext.getPackageName() , 0 );
-					int versioncode = pi.versionCode;
-					if( version > versioncode )
-					{
-						MainActivity activity = (MainActivity)mCtx;
-						activity.downloadUrl = response.getString( "url" );
-						activity.showUpdateDialog();
-					}
+					int latest_version = response.getInt( "version" );
+                    			PackageManager pm = SearchService.mContext.getPackageManager();
+                    			PackageInfo pi = pm.getPackageInfo( SearchService.mContext.getPackageName() , 0 );
+                    			int current_version = pi.versionCode;
+                    			if( latest_version > current_version )
+                    			{
+                        			MainActivity activity = (MainActivity)mCtx;
+                        			activity.downloadUrl = response.getString( "url" );
+                        			activity.showUpdateDialog();
+                    			}
 				}
 				catch( JSONException | NameNotFoundException e )
 				{
