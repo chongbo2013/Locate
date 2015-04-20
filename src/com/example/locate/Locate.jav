@@ -67,14 +67,13 @@ public class Locate
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences( mContext );
 		boolean showApp = sharedPref.getBoolean( "pref_app" , true );
 		boolean showContact = sharedPref.getBoolean( "pref_contact" , true );
-		boolean showWeb = sharedPref.getBoolean( "pref_web" , true );
 		List<Range> list = new ArrayList<Range>();
 		if( showApp )
 			list.add( Range.APP );
 		if( showContact )
 			list.add( Range.CONTACT );
-		if( showWeb )
-			list.add( Range.WEB );
+		// always show web search option
+		list.add( Range.WEB );
 		return list;
 	}
 }

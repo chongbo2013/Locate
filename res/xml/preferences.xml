@@ -5,18 +5,17 @@
         android:key="pref_search_range"
         android:title="@string/pref_search_range" >
         
+        <!-- whether search application or not -->
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="pref_app"
             android:title="@string/pref_app" />
+        
+        <!-- whether search contact or not -->
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="pref_contact"
             android:title="@string/pref_contact" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="pref_web"
-            android:title="@string/pref_web" />
         
     </PreferenceCategory>
     
