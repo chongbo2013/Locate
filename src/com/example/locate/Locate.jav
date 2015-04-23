@@ -21,6 +21,11 @@ import com.example.locate.content.SearchResultInfo;
 public class Locate
 {
 	
+	// whether develop in debug mode or not
+	public static final boolean DEBUG = true;
+	// debug tag for LogCat
+	public static final String TAG = "Locate";
+	
 	public enum Range
 	{
 		APP , CONTACT , WEB

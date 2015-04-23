@@ -5,8 +5,10 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.example.locate.Locate;
 import com.example.locate.content.Application;
 import com.example.locate.content.Contact;
 import com.example.locate.listener.HomeListen;
@@ -25,8 +27,15 @@ public class SearchService extends Service
 		super.onCreate();
 		mContext = this;
 		initHomeListen();
+		long seconds_be = System.currentTimeMillis();
 		Contact.getInstance();
 		Application.getInstance();
+		long seconds_af = System.currentTimeMillis();
+		if( Locate.DEBUG )
+		{
+			// calculate the time consuming with the indexing
+			Log.d( Locate.TAG , "Index Time Consuming：" + String.valueOf( seconds_af - seconds_be ) + "ms" );
+		}
 	}
 	
 	@Override

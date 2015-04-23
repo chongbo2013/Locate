@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -36,7 +37,6 @@ import com.example.locate.service.SearchService;
 public class MainActivity extends Activity
 {
 	
-	public static final String TAG = "MainActivity";
 	public String downloadUrl = "";
 	private Context mContext;
 	private GridView mGridView;
@@ -116,6 +116,8 @@ public class MainActivity extends Activity
 	{
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.activity_main );
+		if( Locate.DEBUG )
+			Log.d( Locate.TAG , "MainActivity onCreate" );
 		Intent startIntent = new Intent( this , SearchService.class );
 		startService( startIntent );
 		mContext = this;
@@ -127,7 +129,6 @@ public class MainActivity extends Activity
 		mEditText = (EditText)findViewById( R.id.editText );
 		mEditText.addTextChangedListener( mTextWatcher );
 		mEditText.setOnEditorActionListener( mOnEditorActionListener );
-		// checkForUpdate();
 		CommonRequest.getInstance( mContext );
 		CommonRequest.checkForUpdate();
 		CommonRequest.uploadUserInfo();

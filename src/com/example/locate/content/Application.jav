@@ -9,7 +9,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 
+import com.example.locate.Locate;
 import com.example.locate.service.SearchService;
 import com.example.locate.tools.Utils;
 
@@ -26,6 +28,8 @@ public class Application implements Searchable
 	
 	private Application()
 	{
+		if( Locate.DEBUG )
+			Log.d( Locate.TAG , "Application initialize" );
 		PackageManager pm = SearchService.mContext.getPackageManager();
 		Intent i = new Intent( Intent.ACTION_MAIN );
 		i.addCategory( Intent.CATEGORY_LAUNCHER );

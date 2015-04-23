@@ -16,7 +16,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
+import android.util.Log;
 
+import com.example.locate.Locate;
 import com.example.locate.service.SearchService;
 import com.example.locate.tools.Utils;
 
@@ -33,6 +35,8 @@ public class Contact implements Searchable
 	
 	private Contact()
 	{
+		if( Locate.DEBUG )
+			Log.d( Locate.TAG , "Contact initialize" );
 		ContentResolver cr = SearchService.mContext.getContentResolver();
 		Cursor cur = cr.query( ContactsContract.Contacts.CONTENT_URI , null , null , null , null );
 		if( cur.getCount() > 0 )
