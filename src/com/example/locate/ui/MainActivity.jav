@@ -87,11 +87,17 @@ public class MainActivity extends Activity
 			// Set the visibility of cancel icon according to whether empty
 			int visibility = s.toString().equals( "" ) ? View.GONE : View.VISIBLE;
 			mImageButton.setVisibility( visibility );
+			// Reset search if search content is empty
+			if( visibility == View.GONE )
+				searchReset();
+			else
+				mGridView.setVisibility( View.VISIBLE );
 			// Do the searching
 			resultList = Locate.getInstance( mContext ).search( String.valueOf( s ) );
 			mGridView.setAdapter( new ImageAdapter( mContext , resultList ) );
 		}
 	};
+	// When user click search button on the keyboard, perform web search
 	private OnEditorActionListener mOnEditorActionListener = new OnEditorActionListener() {
 		
 		@Override
@@ -151,13 +157,21 @@ public class MainActivity extends Activity
 	public void clearSearchContent(
 			View view )
 	{
+		searchReset();
+	}
+	
+	/**
+	 * Reset the search
+	 */
+	private void searchReset()
+	{
 		// remove the text watcher before clear the search content
 		mEditText.removeTextChangedListener( mTextWatcher );
 		mImageButton.setVisibility( View.GONE );
 		mEditText.setText( "" );
 		mTextView.setText( "" );
 		mTextView.setVisibility( View.GONE );
-		mGridView.setAdapter( null );
+		mGridView.setVisibility( View.GONE );
 		searchResultBg.setBackgroundResource( R.mipmap.search_result_bg );
 		// set the text watcher after clear the search content
 		mEditText.addTextChangedListener( mTextWatcher );
@@ -192,6 +206,11 @@ public class MainActivity extends Activity
 		startActivity( browserIntent );
 	}
 	
+	/**
+	 * When user click the icon in the search bar
+	 * 
+	 * @param view
+	 */
 	public void showSettingActivity(
 			View view )
 	{
