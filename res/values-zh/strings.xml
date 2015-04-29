@@ -1,0 +1,9 @@
+<resources>
+    <string name="content">应用、联系人、互联网</string>
+    <string name="pref_app">应用</string>
+    <string name="pref_contact">联系人</string>
+    <string name="pref_search_range">搜索范围</string>
+    <string name="pref_debug">调试</string>
+    <string name="pref_others">更多</string>
+    <string name="action_settings">设置</string>
+</resources>
