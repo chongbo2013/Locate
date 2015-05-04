@@ -6,7 +6,6 @@
 * [volley](https://android.googlesource.com/platform/frameworks/volley)
 
 ### Licence
--
 [The MIT License (MIT)](https://github.com/movier/Locate/blob/master/LICENSE)
 
 Copyright (c) 2015 Oliver
