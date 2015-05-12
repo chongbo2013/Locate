@@ -40,7 +40,16 @@
             android:parentActivityName=".ui.MainActivity" />
         
         <service android:name=".service.SearchService" />
-        
+                
+	<!-- Receiver when new package is installed or old package is removed -->
+        <receiver android:name=".listener.AppChangedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <data android:scheme="package"></data>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
