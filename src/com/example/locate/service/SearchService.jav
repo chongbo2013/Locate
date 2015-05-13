@@ -18,9 +18,9 @@ import com.example.locate.ui.MainActivity;
 
 public class SearchService extends Service
 {
-	
+
 	public static Context mContext;
-	
+
 	@Override
 	public void onCreate()
 	{
@@ -36,8 +36,12 @@ public class SearchService extends Service
 			// calculate the time consuming with the indexing
 			Log.d( Locate.TAG , "Index Time Consuming：" + String.valueOf( seconds_af - seconds_be ) + "ms" );
 		}
+		if(BootCompleteReceiver.DEBUG)
+		{
+				Toast.makeText(mContext, "Service started", Toast.LENGTH_SHORT).show();
+    }
 	}
-	
+
 	@Override
 	public int onStartCommand(
 			Intent intent ,
@@ -47,31 +51,31 @@ public class SearchService extends Service
 		mHomeListen.start();
 		return super.onStartCommand( intent , flags , startId );
 	}
-	
+
 	@Override
 	public void onDestroy()
 	{
 		super.onDestroy();
 	}
-	
+
 	@Override
 	public IBinder onBind(
 			Intent intent )
 	{
 		return null;
 	}
-	
+
 	private void initHomeListen()
 	{
 		mHomeListen = new HomeListen( this );
 		mHomeListen.setOnHomeBtnPressListener( new OnHomeBtnPressLitener() {
-			
+
 			@Override
 			public void onHomeBtnPress()
 			{
 				// TODO
 			}
-			
+
 			@Override
 			public void onHomeBtnLongPress()
 			{

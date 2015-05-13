@@ -3,21 +3,24 @@
     package="com.example.locate"
     android:versionCode="5"
     android:versionName="0.5.0" >
-	
+
     <!-- http://developer.android.com/guide/topics/manifest/activity-element.html#screen -->
     <uses-feature android:name="android.hardware.screen.portrait"/>
-    
+
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="21" />
-    
+
     <!-- Since 'Locate' could search contact, we have to use this permission. -->
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    
+
     <!-- We are able to update ourself, so Internet must be accessible. -->
     <uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	
+	  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- We must start service after device is booted, so we need the permission -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -29,19 +32,19 @@
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-				
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity 
-            android:name=".ui.SettingsActivity" 
+        <activity
+            android:name=".ui.SettingsActivity"
             android:label="@string/action_settings"
             android:parentActivityName=".ui.MainActivity" />
-        
+
         <service android:name=".service.SearchService" />
-                
-	<!-- Receiver when new package is installed or old package is removed -->
+
+	      <!-- Receiver when new package is installed or old package is removed -->
         <receiver android:name=".listener.AppChangedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED"/>
@@ -50,6 +53,13 @@
             </intent-filter>
         </receiver>
 
+        <!-- Receiver which start service after device is booted -->
+        <receiver android:name=".listener.BootCompleteReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        
     </application>
 
 </manifest>
