@@ -26,6 +26,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name"
@@ -60,6 +61,15 @@
             </intent-filter>
         </receiver>
         
+        <!-- Locate app widget -->
+        <receiver android:name=".listener.LocateAppWidgetProvider" >
+    		<intent-filter>
+        		<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+    		</intent-filter>
+    		<meta-data android:name="android.appwidget.provider"
+               android:resource="@xml/locate_appwidget_info" />
+		</receiver>
+
     </application>
 
 </manifest>
