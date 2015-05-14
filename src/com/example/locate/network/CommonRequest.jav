@@ -65,15 +65,15 @@ public class CommonRequest
 				try
 				{
 					int latest_version = response.getInt( "version" );
-                    			PackageManager pm = SearchService.mContext.getPackageManager();
-                    			PackageInfo pi = pm.getPackageInfo( SearchService.mContext.getPackageName() , 0 );
-                    			int current_version = pi.versionCode;
-                    			if( latest_version > current_version )
-                    			{
-                        			MainActivity activity = (MainActivity)mCtx;
-                        			activity.downloadUrl = response.getString( "url" );
-                        			activity.showUpdateDialog();
-                    			}
+					PackageManager pm = SearchService.mContext.getPackageManager();
+					PackageInfo pi = pm.getPackageInfo( SearchService.mContext.getPackageName() , 0 );
+					int current_version = pi.versionCode;
+					if( latest_version > current_version )
+					{
+						MainActivity activity = (MainActivity)mCtx;
+						activity.downloadUrl = response.getString( "url" );
+						activity.showUpdateDialog();
+					}
 				}
 				catch( JSONException | NameNotFoundException e )
 				{
@@ -99,11 +99,11 @@ public class CommonRequest
 	{
 		// these parameters will be stored as user statistics
 		final String android_id = Secure.getString( mCtx.getContentResolver() , Secure.ANDROID_ID );
-		String build_id = Build.ID;
+		//		String build_id = Build.ID;
 		final String build_brand = Build.BRAND;
-		String build_manufacturer = Build.MANUFACTURER;
-		String build_model = Build.MODEL;
-		String build_serial = Build.SERIAL;
+		//		String build_manufacturer = Build.MANUFACTURER;
+		//		String build_model = Build.MODEL;
+		//		String build_serial = Build.SERIAL;
 		// Instantiate the RequestQueue.
 		String url = "http://movier.me:3000/add";
 		// Request a string response from the provided URL.
