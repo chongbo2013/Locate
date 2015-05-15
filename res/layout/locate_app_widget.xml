@@ -1,20 +1,28 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#09C" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/appWidgetButton"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="0dp"
+    android:orientation="horizontal"
+    android:weightSum="1" >
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:background="@color/search_bar"
+        android:contentDescription="@string/abc_action_bar_home_description"
+        android:src="@mipmap/ic_locate" />
 
     <TextView
-        android:id="@+id/appwidget_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Demo"
-        android:textColor="#ffffff"
-        android:textSize="24sp"
-        android:textStyle="bold|italic"
-        android:layout_margin="8dp"
-        android:contentDescription="hello world"
-        android:background="#09C"/>
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@color/search_bar"
+        android:gravity="center|start"
+        android:hint="@string/content"
+        android:textColorHint="#CCCCCC"
+        android:textSize="16sp" />
 
-</RelativeLayout>
+</LinearLayout>
