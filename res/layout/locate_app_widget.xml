@@ -21,7 +21,7 @@
         android:layout_weight="1"
         android:background="@color/search_bar"
         android:gravity="center|start"
-        android:hint="@string/content"
+        android:hint="@string/app_widget_hint"
         android:textColorHint="#CCCCCC"
         android:textSize="16sp" />
 
