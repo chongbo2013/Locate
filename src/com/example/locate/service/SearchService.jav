@@ -4,7 +4,11 @@ package com.example.locate.service;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
 import android.os.IBinder;
+import android.os.Process;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.locate.LocateApplication;
@@ -18,7 +22,7 @@ import com.example.locate.ui.MainActivity;
 public class SearchService extends Service
 {
 	
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 	private Context mContext;
 	
 	@Override
@@ -39,6 +43,7 @@ public class SearchService extends Service
 				Application.getInstance();
 			}
 		} ).start();
+		mContext.getContentResolver().registerContentObserver( ContactsContract.Contacts.CONTENT_URI , true , contentObserver );
 	}
 	
 	@Override
@@ -92,4 +97,24 @@ public class SearchService extends Service
 	}
 	
 	private HomeListen mHomeListen = null;
+	
+	private class ContactContentObserver extends ContentObserver
+	{
+		
+		public ContactContentObserver()
+		{
+			super( null );
+		}
+		
+		@Override
+		public void onChange(
+				boolean selfChange )
+		{
+			super.onChange( selfChange );
+			Log.d( "yangxiaoming" , "MyContextObserver onChange" );
+			Process.killProcess( Process.myPid() );
+		}
+	}
+	
+	ContactContentObserver contentObserver = new ContactContentObserver();
 }
