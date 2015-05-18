@@ -12,7 +12,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.example.locate.Locate;
-import com.example.locate.service.SearchService;
+import com.example.locate.LocateApplication;
 import com.example.locate.tools.Utils;
 
 
@@ -30,7 +30,7 @@ public class Application implements Searchable
 	{
 		if( Locate.DEBUG )
 			Log.d( Locate.TAG , "Application initialize" );
-		PackageManager pm = SearchService.mContext.getPackageManager();
+		PackageManager pm = LocateApplication.getContext().getPackageManager();
 		Intent i = new Intent( Intent.ACTION_MAIN );
 		i.addCategory( Intent.CATEGORY_LAUNCHER );
 		for( ResolveInfo info : pm.queryIntentActivities( i , 0 ) )

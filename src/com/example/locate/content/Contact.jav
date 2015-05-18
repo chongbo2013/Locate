@@ -19,7 +19,7 @@ import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 
 import com.example.locate.Locate;
-import com.example.locate.service.SearchService;
+import com.example.locate.LocateApplication;
 import com.example.locate.tools.Utils;
 
 
@@ -37,7 +37,7 @@ public class Contact implements Searchable
 	{
 		if( Locate.DEBUG )
 			Log.d( Locate.TAG , "Contact initialize" );
-		ContentResolver cr = SearchService.mContext.getContentResolver();
+		ContentResolver cr = LocateApplication.getContext().getContentResolver();
 		Cursor cur = cr.query( ContactsContract.Contacts.CONTENT_URI , null , null , null , null );
 		if( cur.getCount() > 0 )
 		{
@@ -57,7 +57,7 @@ public class Contact implements Searchable
 						Uri uri = Uri.withAppendedPath( ContactsContract.Contacts.CONTENT_URI , String.valueOf( Long.valueOf( id ) ) );
 						intent.setData( uri );
 						if( is != null )
-							mSearchResultInfoList.add( new SearchResultInfo( name , new BitmapDrawable( SearchService.mContext.getResources() , photo ) , intent ) );
+							mSearchResultInfoList.add( new SearchResultInfo( name , new BitmapDrawable( LocateApplication.getContext().getResources() , photo ) , intent ) );
 						else
 							mSearchResultInfoList.add( new SearchResultInfo( name , null , intent ) );
 					}
@@ -108,7 +108,7 @@ public class Contact implements Searchable
 	{
 		Uri contactUri = ContentUris.withAppendedId( Contacts.CONTENT_URI , contactId );
 		Uri photoUri = Uri.withAppendedPath( contactUri , Contacts.Photo.CONTENT_DIRECTORY );
-		Cursor cursor = SearchService.mContext.getContentResolver().query( photoUri , new String[]{ Contacts.Photo.PHOTO } , null , null , null );
+		Cursor cursor = LocateApplication.getContext().getContentResolver().query( photoUri , new String[]{ Contacts.Photo.PHOTO } , null , null , null );
 		if( cursor == null )
 		{
 			return null;

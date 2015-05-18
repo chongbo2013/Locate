@@ -22,7 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.example.locate.service.SearchService;
+import com.example.locate.LocateApplication;
 import com.example.locate.ui.MainActivity;
 
 
@@ -65,8 +65,8 @@ public class CommonRequest
 				try
 				{
 					int latest_version = response.getInt( "version" );
-					PackageManager pm = SearchService.mContext.getPackageManager();
-					PackageInfo pi = pm.getPackageInfo( SearchService.mContext.getPackageName() , 0 );
+					PackageManager pm = LocateApplication.getContext().getPackageManager();
+					PackageInfo pi = pm.getPackageInfo( LocateApplication.getContext().getPackageName() , 0 );
 					int current_version = pi.versionCode;
 					if( latest_version > current_version )
 					{
