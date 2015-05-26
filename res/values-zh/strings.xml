@@ -8,4 +8,7 @@
     <string name="pref_about">关于</string>
     <string name="action_settings">设置</string>
     <string name="app_widget_hint">请输入关键词</string>
+    <string name="website">官方网站</string>
+    <string name="check_for_update">检查新版本</string>
+    <string name="developer_website">开发人员网站</string>
 </resources>
