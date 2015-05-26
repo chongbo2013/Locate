@@ -2,13 +2,12 @@ package com.example.locate.ui;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
-import android.widget.Toast;
 
-import com.example.locate.LocateApplication;
 import com.example.locate.R;
 
 
@@ -33,7 +32,10 @@ public class SettingsFragment extends PreferenceFragment
 			public boolean onPreferenceClick(
 					Preference preference )
 			{
-				Toast.makeText( LocateApplication.getContext() , "hello about perference" , Toast.LENGTH_SHORT ).show();
+				Intent intent = new Intent( getActivity() , SettingsActivity.class );
+				// Ask setting activity to use about fragment
+				intent.putExtra( "about" , true );
+				startActivity( intent );
 				return true;
 			}
 		} );
