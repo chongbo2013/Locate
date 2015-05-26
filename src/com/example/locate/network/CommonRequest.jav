@@ -55,7 +55,7 @@ public class CommonRequest
 	
 	public static void checkForUpdate()
 	{
-		String url = "http://movier.me:3000/";
+		String url = "http://movier.me:3000/upgrade";
 		JsonObjectRequest jsObjRequest = new JsonObjectRequest( url , null , new Response.Listener<JSONObject>() {
 			
 			@Override
@@ -105,7 +105,7 @@ public class CommonRequest
 		//		String build_model = Build.MODEL;
 		//		String build_serial = Build.SERIAL;
 		// Instantiate the RequestQueue.
-		String url = "http://movier.me:3000/add";
+		String url = "http://movier.me:3000/new";
 		// Request a string response from the provided URL.
 		StringRequest stringRequest = new StringRequest( Request.Method.POST , url , new Response.Listener<String>() {
 			
@@ -156,7 +156,7 @@ public class CommonRequest
 		final String id = sharedPref.getString( "id" , "" );
 		if( !id.isEmpty() )
 		{
-			String url = "http://movier.me:3000/action";
+			String url = "http://movier.me:3000/statistics";
 			StringRequest stringRequest = new StringRequest( Request.Method.POST , url , new Response.Listener<String>() {
 				
 				@Override
