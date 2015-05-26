@@ -27,6 +27,10 @@
             android:defaultValue="false"
             android:key="pref_debug"
             android:title="@string/pref_debug" />
+
+        <Preference
+            android:key="pref_about"
+            android:title="@string/pref_about" />
         
     </PreferenceCategory>
 

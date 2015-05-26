@@ -5,6 +5,7 @@
     <string name="pref_search_range">搜索范围</string>
     <string name="pref_debug">调试</string>
     <string name="pref_others">更多</string>
+    <string name="pref_about">关于</string>
     <string name="action_settings">设置</string>
     <string name="app_widget_hint">请输入关键词</string>
 </resources>
