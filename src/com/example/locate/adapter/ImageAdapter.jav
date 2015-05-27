@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.example.locate.R;
 import com.example.locate.content.SearchResultInfo;
-import com.example.locate.network.CommonRequest;
 
 
 public class ImageAdapter extends BaseAdapter
@@ -88,7 +87,6 @@ public class ImageAdapter extends BaseAdapter
 			public void onClick(
 					View v )
 			{
-				CommonRequest.uploadUserAction( contactInfo.getTitle() );
 				// when clicked get into the detail information of the contact
 				mContext.startActivity( contactInfo.getClick() );
 			}

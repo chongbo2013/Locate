@@ -4,12 +4,10 @@ package com.example.locate.ui;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -135,9 +133,9 @@ public class MainActivity extends Activity
 		mEditText = (EditText)findViewById( R.id.editText );
 		mEditText.addTextChangedListener( mTextWatcher );
 		mEditText.setOnEditorActionListener( mOnEditorActionListener );
-		CommonRequest.getInstance( mContext );
-		CommonRequest.checkForUpdate();
-		CommonRequest.uploadUserInfo();
+		CommonRequest commonRequest = new CommonRequest( this );
+		commonRequest.checkForUpdate();
+		commonRequest.uploadUserInfo();
 	}
 	
 	@Override
@@ -189,25 +187,6 @@ public class MainActivity extends Activity
 		Intent intent = new Intent( Intent.ACTION_WEB_SEARCH );
 		intent.putExtra( SearchManager.QUERY , mEditText.getText().toString() );
 		startActivity( intent );
-	}
-	
-	/**
-	 * We found the new version so tell the user to update
-	 */
-	public void showUpdateDialog()
-	{
-		DialogFragment newFragment = new UpdateDialog();
-		newFragment.show( getFragmentManager() , "dialog" );
-	}
-	
-	/**
-	 * User choose to do the update
-	 */
-	public void doPositiveClick()
-	{
-		Uri uri = Uri.parse( downloadUrl );
-		Intent browserIntent = new Intent( Intent.ACTION_VIEW , uri );
-		startActivity( browserIntent );
 	}
 	
 	/**

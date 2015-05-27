@@ -23,7 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.locate.LocateApplication;
-import com.example.locate.ui.MainActivity;
+import com.example.locate.ui.UpdateDialog;
 
 
 /**
@@ -32,28 +32,17 @@ import com.example.locate.ui.MainActivity;
 public class CommonRequest
 {
 	
-	private static CommonRequest mInstance;
-	private static RequestQueue mRequestQueue;
-	private static Context mCtx;
+	private RequestQueue mRequestQueue;
+	private Activity mActivity;
 	
-	private CommonRequest(
-			Context context )
+	public CommonRequest(
+			Activity activity )
 	{
-		mCtx = context;
-		mRequestQueue = LocateRequestQueue.getInstance( mCtx.getApplicationContext() ).getRequestQueue();
+		mActivity = activity;
+		mRequestQueue = LocateRequestQueue.getInstance( mActivity.getApplicationContext() ).getRequestQueue();
 	}
 	
-	public static synchronized CommonRequest getInstance(
-			Context context )
-	{
-		if( mInstance == null )
-		{
-			mInstance = new CommonRequest( context );
-		}
-		return mInstance;
-	}
-	
-	public static void checkForUpdate()
+	public void checkForUpdate()
 	{
 		String url = "http://movier.me:3000/upgrade";
 		JsonObjectRequest jsObjRequest = new JsonObjectRequest( url , null , new Response.Listener<JSONObject>() {
@@ -70,9 +59,9 @@ public class CommonRequest
 					int current_version = pi.versionCode;
 					if( latest_version > current_version )
 					{
-						MainActivity activity = (MainActivity)mCtx;
-						activity.downloadUrl = response.getString( "url" );
-						activity.showUpdateDialog();
+						UpdateDialog newFragment = new UpdateDialog();
+						newFragment.setDownloadUrl( response.getString( "url" ) );
+						newFragment.show( mActivity.getFragmentManager() , "dialog" );
 					}
 				}
 				catch( JSONException | NameNotFoundException e )
@@ -95,10 +84,10 @@ public class CommonRequest
 	/**
 	 * Use volley to upload some information about the user
 	 */
-	public static void uploadUserInfo()
+	public void uploadUserInfo()
 	{
 		// these parameters will be stored as user statistics
-		final String android_id = Secure.getString( mCtx.getContentResolver() , Secure.ANDROID_ID );
+		final String android_id = Secure.getString( mActivity.getContentResolver() , Secure.ANDROID_ID );
 		//		String build_id = Build.ID;
 		final String build_brand = Build.BRAND;
 		//		String build_manufacturer = Build.MANUFACTURER;
@@ -115,7 +104,7 @@ public class CommonRequest
 			{
 				// Display the first 500 characters of the response string.
 				// Get a handle to a SharedPreferences
-				SharedPreferences sharedPref = ( (Activity)mCtx ).getPreferences( Context.MODE_PRIVATE );
+				SharedPreferences sharedPref = mActivity.getPreferences( Context.MODE_PRIVATE );
 				// Write to Shared Preferences
 				SharedPreferences.Editor editor = sharedPref.edit();
 				editor.putString( "id" , response );
@@ -147,11 +136,11 @@ public class CommonRequest
 	/**
 	 * Use volley to upload some action about the user
 	 */
-	public static void uploadUserAction(
+	public void uploadUserAction(
 			final String action )
 	{
 		// Get a handle to a SharedPreferences
-		SharedPreferences sharedPref = ( (Activity)mCtx ).getPreferences( Context.MODE_PRIVATE );
+		SharedPreferences sharedPref = mActivity.getPreferences( Context.MODE_PRIVATE );
 		// Read from Shared Preferences
 		final String id = sharedPref.getString( "id" , "" );
 		if( !id.isEmpty() )
