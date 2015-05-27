@@ -134,7 +134,8 @@ public class MainActivity extends Activity
 		mEditText.addTextChangedListener( mTextWatcher );
 		mEditText.setOnEditorActionListener( mOnEditorActionListener );
 		CommonRequest commonRequest = new CommonRequest( this );
-		commonRequest.checkForUpdate();
+		if( checkOrNot() )
+			commonRequest.checkForUpdate();
 		commonRequest.uploadUserInfo();
 	}
 	
@@ -199,5 +200,33 @@ public class MainActivity extends Activity
 	{
 		Intent intent = new Intent( this , SettingsActivity.class );
 		startActivity( intent );
+	}
+	
+	/**
+	 * Whether we need to check for update or not
+	 * Only when latest check time is one day ago, we need to do the check
+	 * 
+	 * @return
+	 */
+	private boolean checkOrNot()
+	{
+		boolean b = true;
+		long current_time = System.currentTimeMillis();
+		// Get a handle to a SharedPreferences
+		SharedPreferences sharedPref = getPreferences( Context.MODE_PRIVATE );
+		// Read from Shared Preferences
+		long time = sharedPref.getLong( "latest_check_timestamp" , 0 );
+		if( time != 0 && ( current_time - time ) < 24 * 60 * 60 * 1000 )
+		{
+			b = false;
+		}
+		else
+		{
+			// Write to Shared Preferences
+			SharedPreferences.Editor editor = sharedPref.edit();
+			editor.putLong( "latest_check_timestamp" , current_time );
+			editor.apply();
+		}
+		return b;
 	}
 }
