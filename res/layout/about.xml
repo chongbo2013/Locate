@@ -43,8 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
-            android:text="@string/website"
-            android:onClick="openProjectWebsite" />
+            android:text="@string/website" />
         
         <View    
             android:layout_width="wrap_content"
@@ -68,8 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
-            android:text="@string/developer_website"
-            android:onClick="openDeveloperWebsite" />
+            android:text="@string/developer_website" />
 
     </LinearLayout>
 
