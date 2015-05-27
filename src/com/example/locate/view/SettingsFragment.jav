@@ -1,4 +1,4 @@
-package com.example.locate.ui;
+package com.example.locate.view;
 
 
 import android.app.Fragment;
@@ -41,3 +41,4 @@ public class SettingsFragment extends PreferenceFragment
 		} );
 	}
 }
+s

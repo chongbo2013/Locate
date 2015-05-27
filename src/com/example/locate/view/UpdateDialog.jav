@@ -1,4 +1,4 @@
-package com.example.locate.ui;
+package com.example.locate.view;
 
 
 import android.app.AlertDialog;

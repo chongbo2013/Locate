@@ -1,4 +1,4 @@
-package com.example.locate.ui;
+package com.example.locate.view;
 
 
 import java.util.List;
@@ -27,7 +27,7 @@ import android.widget.TextView.OnEditorActionListener;
 import com.example.locate.Locate;
 import com.example.locate.R;
 import com.example.locate.adapter.ImageAdapter;
-import com.example.locate.content.SearchResultInfo;
+import com.example.locate.model.SearchResultInfo;
 import com.example.locate.network.CommonRequest;
 import com.example.locate.service.SearchService;
 
@@ -210,6 +210,7 @@ public class MainActivity extends Activity
 	 */
 	private boolean checkOrNot()
 	{
+		// dasds
 		boolean b = true;
 		long current_time = System.currentTimeMillis();
 		// Get a handle to a SharedPreferences

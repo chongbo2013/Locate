@@ -1,4 +1,4 @@
-package com.example.locate.content;
+package com.example.locate.model;
 
 
 import com.example.locate.Locate.Range;

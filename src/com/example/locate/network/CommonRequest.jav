@@ -23,7 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.locate.LocateApplication;
-import com.example.locate.ui.UpdateDialog;
+import com.example.locate.view.UpdateDialog;
 
 
 /**

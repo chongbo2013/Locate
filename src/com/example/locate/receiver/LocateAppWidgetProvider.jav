@@ -1,4 +1,4 @@
-package com.example.locate.listener;
+package com.example.locate.receiver;
 
 
 import android.app.PendingIntent;
@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.example.locate.R;
-import com.example.locate.ui.MainActivity;
+import com.example.locate.view.MainActivity;
 
 
 /**

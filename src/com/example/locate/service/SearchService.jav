@@ -12,11 +12,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.locate.LocateApplication;
-import com.example.locate.content.Application;
-import com.example.locate.content.Contact;
-import com.example.locate.listener.HomeListen;
-import com.example.locate.listener.HomeListen.OnHomeBtnPressLitener;
-import com.example.locate.ui.MainActivity;
+import com.example.locate.model.Application;
+import com.example.locate.model.Contact;
+import com.example.locate.receiver.HomeListen;
+import com.example.locate.receiver.HomeListen.OnHomeBtnPressLitener;
+import com.example.locate.view.MainActivity;
 
 
 public class SearchService extends Service

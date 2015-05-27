@@ -8,8 +8,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.example.locate.content.SearchFactory;
-import com.example.locate.content.SearchResultInfo;
+import com.example.locate.model.SearchFactory;
+import com.example.locate.model.SearchResultInfo;
 
 
 /**

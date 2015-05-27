@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.locate.R;
-import com.example.locate.content.SearchResultInfo;
+import com.example.locate.model.SearchResultInfo;
 
 
 public class ImageAdapter extends BaseAdapter

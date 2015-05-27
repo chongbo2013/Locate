@@ -1,4 +1,4 @@
-package com.example.locate.tools;
+package com.example.locate.utils;
 
 
 import net.sourceforge.pinyin4j.PinyinHelper;

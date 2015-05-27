@@ -1,4 +1,4 @@
-package com.example.locate.listener;
+package com.example.locate.receiver;
 
 
 import android.content.BroadcastReceiver;

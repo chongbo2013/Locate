@@ -1,4 +1,4 @@
-package com.example.locate.content;
+package com.example.locate.model;
 
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import android.util.Log;
 
 import com.example.locate.Locate;
 import com.example.locate.LocateApplication;
-import com.example.locate.tools.Utils;
+import com.example.locate.utils.Utils;
 
 
 /**
