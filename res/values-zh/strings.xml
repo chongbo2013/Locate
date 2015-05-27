@@ -11,4 +11,7 @@
     <string name="website">官方网站</string>
     <string name="check_for_update">检查新版本</string>
     <string name="developer_website">开发人员网站</string>
+    <string name="update_dialog_title">发现新版本</string>
+    <string name="update_dialog_download">立即下载</string>
+    <string name="update_dialog_cancel">取消</string>
 </resources>

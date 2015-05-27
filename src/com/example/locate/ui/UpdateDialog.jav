@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.example.locate.R;
+
 
 /**
  * After check for upgrade, if new version is found, the dialog will be shown
@@ -28,7 +30,10 @@ public class UpdateDialog extends DialogFragment implements DialogInterface.OnCl
 	{
 		// Use the Builder class for convenient dialog construction
 		AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-		builder.setMessage( "Found New Version" ).setPositiveButton( "Download" , this ).setNegativeButton( "Cancel" , this );
+		String title = getResources().getString( R.string.update_dialog_title );
+		String download = getResources().getString( R.string.update_dialog_download );
+		String cancel = getResources().getString( R.string.update_dialog_cancel );
+		builder.setMessage( title ).setPositiveButton( download , this ).setNegativeButton( cancel , this );
 		// Create the AlertDialog object and return it
 		return builder.create();
 	}

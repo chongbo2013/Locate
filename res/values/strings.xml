@@ -12,4 +12,7 @@
     <string name="website">Website</string>
     <string name="check_for_update">Check for Update</string>
     <string name="developer_website">Developer Website</string>
+    <string name="update_dialog_title">Find new Version</string>
+    <string name="update_dialog_download">Download</string>
+    <string name="update_dialog_cancel">Cancel</string>
 </resources>
