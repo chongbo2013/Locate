@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.locate.R;
+import com.example.locate.network.CommonRequest;
 
 
 public class AboutFragment extends Fragment implements View.OnClickListener
@@ -27,6 +28,8 @@ public class AboutFragment extends Fragment implements View.OnClickListener
 		open_project_website.setOnClickListener( this );
 		TextView open_developer_website = (TextView)v.findViewById( R.id.developer_website_text_view );
 		open_developer_website.setOnClickListener( this );
+		TextView check_for_update = (TextView)v.findViewById( R.id.check_for_update_text_view );
+		check_for_update.setOnClickListener( this );
 		return v;
 	}
 	
@@ -45,6 +48,9 @@ public class AboutFragment extends Fragment implements View.OnClickListener
 			case R.id.developer_website_text_view:
 				i = new Intent( Intent.ACTION_VIEW , Uri.parse( "http://movier.me/" ) );
 				startActivity( i );
+				break;
+			case R.id.check_for_update_text_view:
+				new CommonRequest( getActivity() ).checkForUpdate();
 				break;
 		}
 	}
