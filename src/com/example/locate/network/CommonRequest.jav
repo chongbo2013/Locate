@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.provider.Settings.Secure;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,6 +24,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.locate.LocateApplication;
+import com.example.locate.R;
+import com.example.locate.view.SettingsActivity;
 import com.example.locate.view.UpdateDialog;
 
 
@@ -42,6 +45,9 @@ public class CommonRequest
 		mRequestQueue = LocateRequestQueue.getInstance( mActivity.getApplicationContext() ).getRequestQueue();
 	}
 	
+	/**
+	 * Check whether there is a new version through web
+	 */
 	public void checkForUpdate()
 	{
 		String url = "http://movier.me:3000/upgrade";
@@ -62,6 +68,13 @@ public class CommonRequest
 						UpdateDialog newFragment = new UpdateDialog();
 						newFragment.setDownloadUrl( response.getString( "url" ) );
 						newFragment.show( mActivity.getFragmentManager() , "dialog" );
+					}
+					else
+					{
+						// if current is latest version then toast the user only when he check for update through about
+						// don't toast when in main activity
+						if( mActivity instanceof SettingsActivity )
+							Toast.makeText( mActivity , mActivity.getResources().getString( R.string.latest_version ) , Toast.LENGTH_SHORT ).show();
 					}
 				}
 				catch( JSONException | NameNotFoundException e )
