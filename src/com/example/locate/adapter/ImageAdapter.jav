@@ -3,6 +3,7 @@ package com.example.locate.adapter;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.locate.R;
 import com.example.locate.model.SearchResultInfo;
+import com.example.locate.network.CommonRequest;
 
 
 public class ImageAdapter extends BaseAdapter
@@ -89,6 +91,8 @@ public class ImageAdapter extends BaseAdapter
 			{
 				// when clicked get into the detail information of the contact
 				mContext.startActivity( contactInfo.getClick() );
+				if( mContext instanceof Activity )
+					new CommonRequest( (Activity)mContext ).uploadUserAction( contactInfo.getTitle() );
 			}
 		} );
 		if( contactInfo.getLongClick() != null )

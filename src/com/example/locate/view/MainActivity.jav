@@ -35,7 +35,6 @@ import com.example.locate.service.SearchService;
 public class MainActivity extends Activity
 {
 	
-	public String downloadUrl = "";
 	private Context mContext;
 	private GridView mGridView;
 	private EditText mEditText;
@@ -206,11 +205,10 @@ public class MainActivity extends Activity
 	 * Whether we need to check for update or not
 	 * Only when latest check time is one day ago, we need to do the check
 	 * 
-	 * @return
+	 * @return true if latest check is one day ago
 	 */
 	private boolean checkOrNot()
 	{
-		// dasds
 		boolean b = true;
 		long current_time = System.currentTimeMillis();
 		// Get a handle to a SharedPreferences
