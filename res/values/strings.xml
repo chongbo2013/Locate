@@ -16,4 +16,5 @@
     <string name="update_dialog_download">Download</string>
     <string name="update_dialog_cancel">Cancel</string>
     <string name="latest_version">Latest Version</string>
+    <string name="internet">Internet</string>
 </resources>
