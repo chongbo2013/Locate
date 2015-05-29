@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -95,19 +94,22 @@ public class ImageAdapter extends BaseAdapter
 					new CommonRequest( (Activity)mContext ).uploadUserAction( contactInfo.getTitle() );
 			}
 		} );
-		if( contactInfo.getLongClick() != null )
-		{
-			myView.setOnLongClickListener( new OnLongClickListener() {
-				
-				@Override
-				public boolean onLongClick(
-						View v )
-				{
-					mContext.startActivity( contactInfo.getLongClick() );
-					return true;
-				}
-			} );
-		}
+		/**
+		 * Current we don't need long click event, but it doesn't mean forever
+		 */
+		//		if( contactInfo.getLongClick() != null )
+		//		{
+		//			myView.setOnLongClickListener( new OnLongClickListener() {
+		//				
+		//				@Override
+		//				public boolean onLongClick(
+		//						View v )
+		//				{
+		//					mContext.startActivity( contactInfo.getLongClick() );
+		//					return true;
+		//				}
+		//			} );
+		//		}
 		return myView;
 	}
 }
