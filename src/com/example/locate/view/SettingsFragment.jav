@@ -41,4 +41,3 @@ public class SettingsFragment extends PreferenceFragment
 		} );
 	}
 }
-s

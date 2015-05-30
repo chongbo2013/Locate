@@ -141,14 +141,17 @@ public class MainActivity extends Activity
 	@Override
 	protected void onPause()
 	{
-		super.onPause();
-		if( Locate.DEBUG )
-			Log.d( Locate.TAG , "MainActivity onPause" );
-		// hide the keyboard before start a new activity
-		InputMethodManager inputMethodManager = (InputMethodManager)getSystemService( Activity.INPUT_METHOD_SERVICE );
-		inputMethodManager.hideSoftInputFromWindow( getCurrentFocus().getWindowToken() , 0 );
-		// reset the search
-		searchReset();
+        	super.onPause();
+        	if( Locate.DEBUG )
+            	Log.d( Locate.TAG , "MainActivity onPause" );
+        	/**
+         	* Just hide the action, something wrong
+         	*/
+        	// hide the keyboard before start a new activity
+        	// InputMethodManager inputMethodManager = (InputMethodManager)getSystemService( Activity.INPUT_METHOD_SERVICE );
+        	// inputMethodManager.hideSoftInputFromWindow( getCurrentFocus().getWindowToken() , 0 );
+        	// reset the search
+        	searchReset();
 	}
 	
 	/**
