@@ -15,6 +15,7 @@ import android.util.Log;
 
 import com.example.locate.Locate;
 import com.example.locate.LocateApplication;
+import com.example.locate.util.BitmapUtil;
 import com.example.locate.util.PinyinUtil;
 
 import java.io.ByteArrayInputStream;
@@ -51,13 +52,14 @@ public class Contact implements Searchable
                     while( pCur.moveToNext() )
                     {
                         InputStream is = openPhoto( Long.valueOf( id ) );
-                        Bitmap photo = BitmapFactory.decodeStream( is );
+                        Bitmap photo = BitmapFactory.decodeStream(is);
+                        Bitmap circlePhoto = BitmapUtil.getRoundedCornerBitmap(photo);
                         // when clicked get into the detail information of the contact
                         Intent intent = new Intent( Intent.ACTION_VIEW );
                         Uri uri = Uri.withAppendedPath( ContactsContract.Contacts.CONTENT_URI , String.valueOf( Long.valueOf( id ) ) );
                         intent.setData( uri );
                         if( is != null )
-                            mSearchResultInfoList.add( new SearchResultInfo( name , new BitmapDrawable( LocateApplication.getContext().getResources() , photo ) , intent ) );
+                            mSearchResultInfoList.add( new SearchResultInfo( name , new BitmapDrawable( LocateApplication.getContext().getResources() , circlePhoto ) , intent ) );
                         else
                             mSearchResultInfoList.add( new SearchResultInfo( name , null , intent ) );
                     }
