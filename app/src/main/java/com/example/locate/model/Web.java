@@ -1,16 +1,16 @@
 package com.example.locate.model;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 import com.example.locate.LocateApplication;
 import com.example.locate.R;
+import com.example.locate.util.CommonUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -36,12 +36,11 @@ public class Web implements Searchable
 	public List<SearchResultInfo> search(
 			String str )
 	{
-		List<SearchResultInfo> appInfo = new ArrayList<SearchResultInfo>();
+		List<SearchResultInfo> appInfo = new ArrayList<>();
 		Resources resources = LocateApplication.getContext().getResources();
-		String title = resources.getString( R.string.internet );
-		Drawable icon = resources.getDrawable( R.mipmap.internet );
-		Intent click = new Intent( Intent.ACTION_WEB_SEARCH );
-		click.putExtra( SearchManager.QUERY , str );
+		String title = resources.getString(R.string.internet);
+		Drawable icon = resources.getDrawable(R.mipmap.internet);
+		Intent click = CommonUtil.getWebSearchIntent(str);
 		appInfo.add( new SearchResultInfo( title , icon , click ) );
 		return appInfo;
 	}

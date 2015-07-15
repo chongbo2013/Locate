@@ -2,7 +2,6 @@ package com.example.locate.view;
 
 
 import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +26,7 @@ import com.example.locate.adapter.ImageAdapter;
 import com.example.locate.model.SearchResultInfo;
 import com.example.locate.network.CommonRequest;
 import com.example.locate.service.SearchService;
+import com.example.locate.util.CommonUtil;
 
 import java.util.List;
 
@@ -186,8 +186,8 @@ public class MainActivity extends Activity
      */
     private void webSearch()
     {
-        Intent intent = new Intent( Intent.ACTION_WEB_SEARCH );
-        intent.putExtra( SearchManager.QUERY , mEditText.getText().toString() );
+        String str = mEditText.getText().toString();
+        Intent intent = CommonUtil.getWebSearchIntent(str);
         startActivity( intent );
     }
 
